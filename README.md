@@ -1,3 +1,29 @@
+# EstateOS Network
+
+EstateOS Network is a Real Estate Operating Network, not a generic property listing site.
+
+This repository is being transformed from a Movin' In technical shell into a platform for structured, attributable, verified, scored, API-accessible, AI-readable real estate data assets with deal-room context and future data rights.
+
+Start here before implementation:
+
+- `AGENT.md` - operating rules for AI coding agents.
+- `RULER.md` - non-negotiable product laws and guardrails.
+- `CHECKPOINT.md` - build gates and final PR checklist.
+- `docs/IMPLEMENTATION_CONTRACT.md` - master implementation contract.
+- `docs/PRODUCT.md` - EstateOS product architecture.
+- `docs/SUPER_TASK_PLAN.md` - phased implementation master plan.
+
+Core product doctrine:
+
+- Claim before truth.
+- Evidence before privilege.
+- Trust is earned, not granted at login.
+- Sensitive evidence is private by default.
+- Data contribution and API usage must be recorded from day one.
+- Revenue starts from verification, data, API, and SaaS, not large transaction commission.
+
+The original Movin' In documentation below remains useful for understanding the inherited technical shell, but EstateOS implementation must follow the documentation kernel above.
+
 [![build](https://github.com/aelassas/movinin/actions/workflows/build.yml/badge.svg)](https://github.com/aelassas/movinin/actions/workflows/build.yml) 
 [![test](https://github.com/aelassas/movinin/actions/workflows/test.yml/badge.svg)](https://github.com/aelassas/movinin/actions/workflows/test.yml)
 [![codecov](https://img.shields.io/codecov/c/github/aelassas/movinin?label=coverage)](https://codecov.io/gh/aelassas/movinin)
