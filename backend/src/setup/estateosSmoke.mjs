@@ -91,7 +91,7 @@ const main = async () => {
         throw new Error(`Missing forbidden label: ${label}`)
       }
     }
-    await check(`forbidden labels OK (${FORBIDDEN_LABELS.length} defined)`)
+    await check(`forbidden labels OK (${FORBIDDEN_LABELS.length} defined)`, async () => {})
   } catch (err) {
     if (err.code === 'ERR_MODULE_NOT_FOUND' || err.code === 'MODULE_NOT_FOUND') {
       console.log(`  ⚠️  Forbidden labels check skipped (dist not built yet)`)
