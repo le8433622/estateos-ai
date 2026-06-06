@@ -7,14 +7,14 @@
   "scripts": {
     "dev": "nodemon",
     "dev:setup": "npm run setup && nodemon",
-    "build": "rimraf dist && cross-env NODE_OPTIONS=\"--max-old-space-size=1024\" tsc --build --verbose && babel dist -d dist",
+    "build": "rm -rf dist && cross-env NODE_OPTIONS=\"--max-old-space-size=1024\" tsc --build --verbose && babel dist -d dist",
     "start": "node --import ./dist/src/monitoring/instrument.js dist/src/index.js",
     "start:setup": "npm run build && node dist/src/setup/setup.js && node --import ./dist/src/monitoring/instrument.js dist/src",
     "setup": "npm run build && node dist/src/setup/setup.js",
     "seed:estateos": "npm run build && node dist/src/setup/estateosSeed.js",
 "smoke:estateos": "node src/setup/estateosSmoke.mjs",
     "reset": "npm run build && node dist/src/setup/reset.js",
-    "test": "rimraf coverage && npm run build && cross-env NODE_OPTIONS=\"--experimental-vm-modules\" jest --coverage --no-cache",
+    "test": "rm -rf coverage && npm run build && cross-env NODE_OPTIONS=\"--experimental-vm-modules\" jest --coverage --no-cache",
     "lint": "eslint . --cache --cache-location .eslintcache",
     "ncu": "ncu -u -x eslint"
   },
