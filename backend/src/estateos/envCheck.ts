@@ -95,7 +95,7 @@ const checkSeedNotInProduction = (): EnvValidationResult => {
 
 const checkPlansSeeded = async (): Promise<EnvValidationResult> => {
   try {
-    const BillingPlan = (await import('../models/BillingPlan')).default
+    const BillingPlan = (await import('../models/BillingPlan.js')).default
     const count = await BillingPlan.countDocuments()
     const passed = count >= 2
     return {
