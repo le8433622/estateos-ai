@@ -1,5 +1,7 @@
 # EstateOS Pilot QA Checklist
 
+> **URLs (internal pilot):** Backend `https://estateos-backend-api.onrender.com`, Frontend `https://estateos-frontend.onrender.com`, Admin `https://estateos-admin.onrender.com`. Custom domains (`estateos.vn`) are optional for internal pilot — required only before public partner launch.
+
 ## Supply Flow
 
 - [ ] Source owner can log in

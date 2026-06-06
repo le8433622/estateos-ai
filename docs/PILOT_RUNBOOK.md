@@ -1,12 +1,21 @@
 # EstateOS Pilot Runbook — End-to-End Demo
 
+## URLs
+
+| Service | Production URL (no custom domain) | Custom Domain (future) |
+|---------|----------------------------------|----------------------|
+| Backend API | `https://estateos-backend-api.onrender.com` | `api.estateos.vn` |
+| Frontend | `https://estateos-frontend.onrender.com` | `app.estateos.vn` |
+| Admin | `https://estateos-admin.onrender.com` | `admin.estateos.vn` |
+
+> **Note:** Custom domains (`estateos.vn`) are optional for internal pilot. All pilot steps work with Render onrender.com URLs. Custom domains are required only before public partner launch.
+
 ## Prerequisites
 
-- MongoDB running
-- `npm run seed:estateos` completed
-- Backend running (`backend> npm run start`)
-- Admin running (`admin> npm run start`)
-- Frontend running (`frontend> npm run start`)
+- Backend live at `https://estateos-backend-api.onrender.com` — check `GET /health` returns `{"status":"ok"}`
+- Admin live at `https://estateos-admin.onrender.com`
+- Frontend live at `https://estateos-frontend.onrender.com`
+- Database seeded with billing plans (8 plans in `EstateOSBillingPlan`)
 
 ## Step-by-Step
 
@@ -20,14 +29,14 @@ Expected: Kernel seed completed, billing plans seeded.
 
 ### 2. Log in as Platform Operator
 
-- URL: http://localhost:3002 (admin)
+- URL: `https://estateos-admin.onrender.com` (admin)
 - Email: `operator@estateos.test`
 - Password: `EstateOS123`
 - Expected: Admin dashboard loads with EstateOS data in side menu.
 
 ### 3. Log in as Source Owner (in another browser/incognito)
 
-- URL: http://localhost:3003 (frontend)
+- URL: `https://estateos-frontend.onrender.com` (frontend)
 - Email: `claim-source-1@estateos.test`
 - Password: `EstateOS123`
 - Navigate to **Supply** in side menu.
