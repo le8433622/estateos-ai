@@ -12,7 +12,6 @@ const SignIn = lazy(() => import('@/pages/SignIn'))
 const Activate = lazy(() => import('@/pages/Activate'))
 const ForgotPassword = lazy(() => import('@/pages/ForgotPassword'))
 const ResetPassword = lazy(() => import('@/pages/ResetPassword'))
-const SignUp = lazy(() => import('@/pages/SignUp'))
 const Agencies = lazy(() => import('@/pages/Agencies'))
 const Agency = lazy(() => import('@/pages/Agency'))
 const CreateAgency = lazy(() => import('@/pages/CreateAgency'))
@@ -43,6 +42,13 @@ const Countries = lazy(() => import('@/pages/Countries'))
 const CreateCountry = lazy(() => import('@/pages/CreateCountry'))
 const UpdateCountry = lazy(() => import('@/pages/UpdateCountry'))
 const Scheduler = lazy(() => import('@/pages/Scheduler'))
+const EstateOSCommandCenter = lazy(() => import('@/pages/EstateOSCommandCenter'))
+const EstateOSBillingConsole = lazy(() => import('@/pages/EstateOSBillingConsole'))
+const EstateOSDataQuality = lazy(() => import('@/pages/EstateOSDataQuality'))
+const EstateOSDistributionConsole = lazy(() => import('@/pages/EstateOSDistributionConsole'))
+const EstateOSPartnersConsole = lazy(() => import('@/pages/EstateOSPartnersConsole'))
+const EstateOSPilotDashboard = lazy(() => import('@/pages/EstateOSPilotDashboard'))
+const EstateOSLaunchDashboard = lazy(() => import('@/pages/EstateOSLaunchDashboard'))
 
 const AppLayout = () => {
   const location = useLocation()
@@ -110,6 +116,13 @@ const router = createBrowserRouter([
       { path: '/create-country', element: <CreateCountry /> },
       { path: '/update-country', element: <UpdateCountry /> },
       { path: '/scheduler', element: <Scheduler /> },
+      { path: '/estateos', element: <EstateOSCommandCenter /> },
+      { path: '/estateos/billing', element: <EstateOSBillingConsole /> },
+      { path: '/estateos/data-quality', element: <EstateOSDataQuality /> },
+      { path: '/estateos/distribution', element: <EstateOSDistributionConsole /> },
+      { path: '/estateos/partners', element: <EstateOSPartnersConsole /> },
+      { path: '/estateos/pilot', element: <EstateOSPilotDashboard /> },
+      { path: '/estateos/launch', element: <EstateOSLaunchDashboard /> },
       { path: '*', element: <NoMatch /> }
     ]
   }

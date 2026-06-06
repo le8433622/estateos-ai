@@ -23,6 +23,7 @@ import {
   Language as LanguageIcon,
   Settings as SettingsIcon,
   Dashboard as DashboardIcon,
+  AccountTree as EstateOSIcon,
   CorporateFare as AgenciesIcon,
   LocationOn as LocationsIcon,
   Home as PropertiesIcon,
@@ -32,6 +33,11 @@ import {
   ExitToApp as SignoutIcon,
   Flag as CountriesIcon,
   CalendarMonth as SchedulerIcon,
+  Receipt as BillingIcon,
+  FactCheck as QualityIcon,
+  Hub as DistributionIcon,
+  Handshake as PartnersIcon,
+  Rocket as PilotIcon,
 } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 import * as movininTypes from ':movinin-types'
@@ -297,6 +303,60 @@ const Header = ({
                 >
                   <ListItemIcon><SchedulerIcon /></ListItemIcon>
                   <ListItemText primary={strings.SCHEDULER} />
+                </ListItem>
+                <ListItem
+                  onClick={() => {
+                    navigate('/estateos')
+                    handleSideMenuClose()
+                  }}
+                >
+                  <ListItemIcon><EstateOSIcon /></ListItemIcon>
+                  <ListItemText primary="EstateOS" />
+                </ListItem>
+                <ListItem
+                  onClick={() => {
+                    navigate('/estateos/billing')
+                    handleSideMenuClose()
+                  }}
+                >
+                  <ListItemIcon><BillingIcon /></ListItemIcon>
+                  <ListItemText primary="Billing" />
+                </ListItem>
+                <ListItem
+                  onClick={() => {
+                    navigate('/estateos/data-quality')
+                    handleSideMenuClose()
+                  }}
+                >
+                  <ListItemIcon><QualityIcon /></ListItemIcon>
+                  <ListItemText primary="Data Quality" />
+                </ListItem>
+                <ListItem
+                  onClick={() => {
+                    navigate('/estateos/distribution')
+                    handleSideMenuClose()
+                  }}
+                >
+                  <ListItemIcon><DistributionIcon /></ListItemIcon>
+                  <ListItemText primary="Distribution" />
+                </ListItem>
+                <ListItem
+                  onClick={() => {
+                    navigate('/estateos/partners')
+                    handleSideMenuClose()
+                  }}
+                >
+                  <ListItemIcon><PartnersIcon /></ListItemIcon>
+                  <ListItemText primary="Partners" />
+                </ListItem>
+                <ListItem
+                  onClick={() => {
+                    navigate('/estateos/pilot')
+                    handleSideMenuClose()
+                  }}
+                >
+                  <ListItemIcon><PilotIcon /></ListItemIcon>
+                  <ListItemText primary="Pilot" />
                 </ListItem>
                 <ListItem
                   onClick={() => {

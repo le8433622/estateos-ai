@@ -11,6 +11,8 @@
     "start": "npm run build && node --import ./dist/src/monitoring/instrument.js dist/src",
     "start:setup": "npm run build && node dist/src/setup/setup.js && node --import ./dist/src/monitoring/instrument.js dist/src",
     "setup": "npm run build && node dist/src/setup/setup.js",
+    "seed:estateos": "npm run build && node dist/src/setup/estateosSeed.js",
+"smoke:estateos": "node src/setup/estateosSmoke.mjs",
     "reset": "npm run build && node dist/src/setup/reset.js",
     "test": "rimraf coverage && npm run build && cross-env NODE_OPTIONS=\"--experimental-vm-modules\" jest --coverage --no-cache",
     "lint": "eslint . --cache --cache-location .eslintcache",

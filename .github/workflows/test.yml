@@ -62,8 +62,8 @@ jobs:
            echo MI_PAYPAL_CLIENT_ID=$MI_PAYPAL_CLIENT_ID >> .env
            echo MI_PAYPAL_CLIENT_SECRET=$MI_PAYPAL_CLIENT_SECRET >> .env
            echo MI_ADMIN_EMAIL=$MI_ADMIN_EMAIL >> .env
-           npm install
-           npm test
+            npm install
+            npm test
       env:
         NODE_ENV: ${{ vars.NODE_ENV }}
         MI_CI: ${{ vars.MI_CI }}

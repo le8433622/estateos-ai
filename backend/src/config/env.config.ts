@@ -730,6 +730,26 @@ export interface Property extends Document {
   available?: boolean
   rentalTerm: movininTypes.RentalTerm
   blockOnPay?: boolean
+  source_account_id?: Types.ObjectId
+  listing_type?: string
+  property_type?: string
+  price_per_m2?: number
+  location_precision?: string
+  location_public?: Record<string, unknown>
+  location_private?: Record<string, unknown>
+  api_visibility?: string
+  claim_state?: string
+  trust_state?: Record<string, unknown>
+  trust_score?: number
+  risk_score?: number
+  freshness_score?: number
+  duplicate_risk_score?: number
+  last_checked_at?: Date
+  quality_score?: number
+  quality_level?: string
+  last_quality_check_at?: Date
+  createdAt?: Date
+  updatedAt?: Date
 }
 
 /**

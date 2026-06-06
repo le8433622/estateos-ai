@@ -1,0 +1,103 @@
+.api-docs {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 0 auto;
+  max-width: 1180px;
+  padding: 42px 20px 64px;
+}
+
+.api-docs-hero {
+  background: linear-gradient(135deg, #0f172a, #1e3a8a);
+  border-radius: 24px;
+  color: #fff;
+  padding: 36px;
+}
+
+.api-docs-hero p {
+  color: #93c5fd;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin: 0 0 8px;
+  text-transform: uppercase;
+}
+
+.api-docs-hero h1 {
+  font-size: 42px;
+  line-height: 1.05;
+  margin: 0 0 16px;
+  max-width: 760px;
+}
+
+.api-docs-hero span {
+  color: #dbeafe;
+  display: block;
+  max-width: 820px;
+}
+
+.api-docs-grid,
+.api-docs-endpoints {
+  display: grid;
+  gap: 16px;
+}
+
+.api-docs-grid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.api-docs-endpoints {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.api-docs-card,
+.api-docs-endpoint {
+  padding: 22px;
+}
+
+.api-docs-card h2,
+.api-docs-endpoint h2 {
+  margin: 0 0 10px;
+}
+
+.api-docs-card p,
+.api-docs-endpoint p {
+  color: #475569;
+  margin: 8px 0;
+}
+
+.api-docs-endpoint-header {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.api-docs-endpoint code,
+.api-docs-endpoint pre {
+  background: #0f172a;
+  border-radius: 10px;
+  color: #bfdbfe;
+  display: block;
+  overflow: auto;
+  padding: 12px;
+}
+
+.api-docs-endpoint pre {
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+@media only screen and (width <= 960px) {
+  .api-docs {
+    padding: 24px 12px 48px;
+  }
+
+  .api-docs-hero {
+    padding: 24px;
+  }
+
+  .api-docs-hero h1 {
+    font-size: 32px;
+  }
+}

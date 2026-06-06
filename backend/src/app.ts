@@ -18,6 +18,7 @@ import stripeRoutes from './routes/stripeRoutes'
 import countryRoutes from './routes/countryRoutes'
 import paypalRoutes from './routes/paypalRoutes'
 import ipinfoRoutes from './routes/ipinfoRoutes'
+import estateosRoutes from './routes/estateosRoutes'
 import * as helper from './utils/helper'
 
 const app = express()
@@ -47,6 +48,9 @@ app.use(cors())
 app.use(cookieParser(env.COOKIE_SECRET))
 app.use(allowedMethods)
 
+// Root health endpoint
+app.get('/health', (_req, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }))
+
 // Serve static files from the CDN directory
 app.use('/cdn', express.static(env.CDN_ROOT))
 
@@ -60,6 +64,7 @@ app.use('/', stripeRoutes)
 app.use('/', countryRoutes)
 app.use('/', paypalRoutes)
 app.use('/', ipinfoRoutes)
+app.use('/', estateosRoutes)
 
 if (env.ENABLE_SENTRY) {
   Sentry.setupExpressErrorHandler(app)

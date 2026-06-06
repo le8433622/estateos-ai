@@ -38,6 +38,16 @@ const Agencies = lazy(() => import('@/pages/Agencies'))
 const Locations = lazy(() => import('@/pages/Locations'))
 const Privacy = lazy(() => import('@/pages/Privacy'))
 const CookiePolicy = lazy(() => import('@/pages/CookiePolicy'))
+const ApiDocs = lazy(() => import('@/pages/ApiDocs'))
+const ActivationSupply = lazy(() => import('@/pages/ActivationSupply'))
+const ActivationSupplyNew = lazy(() => import('@/pages/ActivationSupplyNew'))
+const ActivationSupplyDetail = lazy(() => import('@/pages/ActivationSupplyDetail'))
+const ActivationSupplyEvidenceNew = lazy(() => import('@/pages/ActivationSupplyEvidenceNew'))
+const ActivationApi = lazy(() => import('@/pages/ActivationApi'))
+const ActivationVerifier = lazy(() => import('@/pages/ActivationVerifier'))
+const ActivationDemand = lazy(() => import('@/pages/ActivationDemand'))
+const DataProducts = lazy(() => import('@/pages/DataProducts'))
+const PartnersDashboard = lazy(() => import('@/pages/PartnersDashboard'))
 
 const AppLayout = () => {
   const location = useLocation()
@@ -95,6 +105,16 @@ const router = createBrowserRouter([
       { path: '/destinations', element: <Locations /> },
       { path: '/privacy', element: <Privacy /> },
       { path: '/cookie-policy', element: <CookiePolicy /> },
+      { path: '/api-docs', element: <ApiDocs /> },
+      { path: '/supply', element: <ActivationSupply /> },
+      { path: '/supply/new', element: <ActivationSupplyNew /> },
+      { path: '/supply/:id', element: <ActivationSupplyDetail /> },
+      { path: '/supply/:id/evidence/new', element: <ActivationSupplyEvidenceNew /> },
+      { path: '/api', element: <ActivationApi /> },
+      { path: '/verifier', element: <ActivationVerifier /> },
+      { path: '/demand', element: <ActivationDemand /> },
+      { path: '/api/data-products', element: <DataProducts /> },
+      { path: '/partners', element: <PartnersDashboard /> },
       { path: '*', element: <NoMatch /> }
     ]
   }

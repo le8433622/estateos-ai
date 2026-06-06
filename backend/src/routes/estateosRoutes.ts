@@ -1,0 +1,108 @@
+import express from 'express'
+import authJwt from '../middlewares/authJwt'
+import * as estateosController from '../controllers/estateosController'
+import * as billingController from '../controllers/billingController'
+import * as qualityController from '../controllers/qualityController'
+import * as distributionController from '../controllers/distributionController'
+import * as partnerController from '../controllers/partnerController'
+import * as pilotController from '../controllers/pilotController'
+
+const routes = express.Router()
+
+routes.route('/api/v1/ops/command-center').get(authJwt.verifyToken, authJwt.authAdmin, estateosController.opsCommandCenter)
+routes.route('/api/v1/ops/properties').get(authJwt.verifyToken, authJwt.authAdmin, estateosController.opsProperties)
+routes.route('/api/v1/ops/property-claims').get(authJwt.verifyToken, authJwt.authAdmin, estateosController.opsPropertyClaims)
+routes.route('/api/v1/ops/property-evidence').get(authJwt.verifyToken, authJwt.authAdmin, estateosController.opsPropertyEvidence)
+routes.route('/api/v1/ops/verification-jobs').get(authJwt.verifyToken, authJwt.authAdmin, estateosController.opsVerificationJobs)
+routes.route('/api/v1/ops/verification-reports').get(authJwt.verifyToken, authJwt.authAdmin, estateosController.opsVerificationReports)
+routes.route('/api/v1/ops/risk-flags').get(authJwt.verifyToken, authJwt.authAdmin, estateosController.opsRiskFlags)
+routes.route('/api/v1/ops/api-keys').get(authJwt.verifyToken, authJwt.authAdmin, estateosController.opsApiKeys)
+routes.route('/api/v1/ops/api-usage').get(authJwt.verifyToken, authJwt.authAdmin, estateosController.opsApiUsage)
+routes.route('/api/v1/ops/contribution-ledger').get(authJwt.verifyToken, authJwt.authAdmin, estateosController.opsContributionLedger)
+routes.route('/api/v1/ops/data-usage-ledger').get(authJwt.verifyToken, authJwt.authAdmin, estateosController.opsDataUsageLedger)
+routes.route('/api/v1/ops/audit-logs').get(authJwt.verifyToken, authJwt.authAdmin, estateosController.opsAuditLogs)
+routes.route('/api/v1/properties').get(estateosController.listProperties)
+routes.route('/api/v1/properties/:id/trust-state').get(estateosController.getTrustState)
+routes.route('/api/v1/properties/:id').get(estateosController.getProperty)
+routes.route('/api/v1/supply/properties').post(authJwt.verifyToken, estateosController.createSupplyProperty)
+routes.route('/api/v1/supply/properties/:id/evidence').get(authJwt.verifyToken, estateosController.listPropertyEvidence)
+routes.route('/api/v1/supply/properties/:id/evidence').post(authJwt.verifyToken, estateosController.attachEvidence)
+routes.route('/api/v1/verification/jobs').get(authJwt.verifyToken, estateosController.listVerificationJobs)
+routes.route('/api/v1/verification/jobs').post(authJwt.verifyToken, estateosController.createVerificationJob)
+routes.route('/api/v1/verification/jobs/:id/submit').post(authJwt.verifyToken, estateosController.submitVerificationReport)
+routes.route('/api/v1/api-keys').post(authJwt.verifyToken, estateosController.createApiKey)
+routes.route('/api/v1/api-keys/:id').delete(authJwt.verifyToken, estateosController.revokeApiKey)
+routes.route('/api/v1/api-usage').get(authJwt.verifyToken, estateosController.getApiUsage)
+routes.route('/api/v1/api-scopes').get(estateosController.apiScopes)
+
+routes.route('/api/v1/activation/profiles').get(authJwt.verifyToken, estateosController.listOwnProfiles)
+routes.route('/api/v1/activation/profiles').post(authJwt.verifyToken, estateosController.createOwnProfile)
+routes.route('/api/v1/activation/supply/properties').get(authJwt.verifyToken, estateosController.listOwnSupplyProperties)
+routes.route('/api/v1/activation/demand/profiles').get(authJwt.verifyToken, estateosController.listDemandProfiles)
+routes.route('/api/v1/activation/demand/profiles').post(authJwt.verifyToken, estateosController.createDemandProfile)
+routes.route('/api/v1/activation/demand/profiles/:id').put(authJwt.verifyToken, estateosController.updateDemandProfile)
+routes.route('/api/v1/activation/demand/profiles/:id').delete(authJwt.verifyToken, estateosController.deleteDemandProfile)
+routes.route('/api/v1/activation/saved-properties').get(authJwt.verifyToken, estateosController.listSavedProperties)
+routes.route('/api/v1/activation/saved-properties').post(authJwt.verifyToken, estateosController.saveProperty)
+routes.route('/api/v1/activation/saved-properties/:propertyId').delete(authJwt.verifyToken, estateosController.removeSavedProperty)
+routes.route('/api/v1/activation/verifier/jobs').get(authJwt.verifyToken, estateosController.listOwnVerifierJobs)
+routes.route('/api/v1/activation/api-keys').get(authJwt.verifyToken, estateosController.listOwnApiKeys)
+routes.route('/api/v1/activation/api-usage').get(authJwt.verifyToken, estateosController.getOwnApiUsage)
+
+routes.route('/api/v1/billing/plans').get(billingController.listPlans)
+routes.route('/api/v1/billing/plans/:id').get(billingController.getPlan)
+routes.route('/api/v1/billing/subscriptions').get(authJwt.verifyToken, billingController.listSubscriptions)
+routes.route('/api/v1/billing/subscriptions').post(authJwt.verifyToken, billingController.createSubscription)
+routes.route('/api/v1/billing/invoices').get(authJwt.verifyToken, billingController.listInvoices)
+routes.route('/api/v1/billing/usage').get(authJwt.verifyToken, billingController.getUsageForCurrentPlan)
+routes.route('/api/v1/billing/verification-packages').post(authJwt.verifyToken, billingController.requestVerificationPackage)
+routes.route('/api/v1/billing/verification-packages').get(authJwt.verifyToken, billingController.listVerificationPackageRequests)
+
+routes.route('/api/v1/billing/admin/overview').get(authJwt.verifyToken, authJwt.authAdmin, billingController.billingOverview)
+routes.route('/api/v1/billing/admin/invoices').get(authJwt.verifyToken, authJwt.authAdmin, billingController.adminListInvoices)
+routes.route('/api/v1/billing/admin/invoices').post(authJwt.verifyToken, authJwt.authAdmin, billingController.adminIssueInvoice)
+routes.route('/api/v1/billing/admin/invoices/:id/status').patch(authJwt.verifyToken, authJwt.authAdmin, billingController.adminUpdateInvoiceStatus)
+routes.route('/api/v1/billing/admin/subscriptions').get(authJwt.verifyToken, authJwt.authAdmin, billingController.adminListSubscriptions)
+routes.route('/api/v1/billing/admin/subscriptions').post(authJwt.verifyToken, authJwt.authAdmin, billingController.adminAssignSubscription)
+routes.route('/api/v1/billing/admin/payments').get(authJwt.verifyToken, authJwt.authAdmin, billingController.adminListPaymentRecords)
+
+routes.route('/api/v1/quality/properties/:id').get(qualityController.getPropertyQuality)
+routes.route('/api/v1/quality/supply/:id/hints').get(authJwt.verifyToken, qualityController.getSupplyQualityHints)
+routes.route('/api/v1/quality/admin/overview').get(authJwt.verifyToken, authJwt.authAdmin, qualityController.getAdminQualityOverview)
+routes.route('/api/v1/quality/admin/queue').get(authJwt.verifyToken, authJwt.authAdmin, qualityController.getAdminQualityQueue)
+routes.route('/api/v1/quality/admin/properties/:id').get(authJwt.verifyToken, authJwt.authAdmin, qualityController.getAdminQualityDetail)
+routes.route('/api/v1/quality/admin/refresh').post(authJwt.verifyToken, authJwt.authAdmin, qualityController.postRefreshQuality)
+routes.route('/api/v1/quality/admin/refresh/:id').post(authJwt.verifyToken, authJwt.authAdmin, qualityController.postRefreshQuality)
+routes.route('/api/v1/quality/admin/market-signals').get(authJwt.verifyToken, authJwt.authAdmin, qualityController.getAdminMarketSignals)
+
+routes.route('/api/v1/data-products').get(distributionController.listDataProducts)
+routes.route('/api/v1/data-products/:id').get(distributionController.getDataProduct)
+routes.route('/api/v1/data-products/:id/preview').get(distributionController.previewDataProduct)
+routes.route('/api/v1/data-products/:id/export').get(distributionController.exportDataProduct)
+routes.route('/api/v1/data-products/:id/feed').get(distributionController.feedDataProduct)
+routes.route('/api/v1/webhooks').get(authJwt.verifyToken, distributionController.listWebhooks)
+routes.route('/api/v1/webhooks').post(authJwt.verifyToken, distributionController.createWebhook)
+routes.route('/api/v1/webhooks/:id').delete(authJwt.verifyToken, distributionController.deleteWebhook)
+routes.route('/api/v1/webhooks/logs').get(authJwt.verifyToken, distributionController.listWebhookDeliveryLogs)
+routes.route('/api/v1/distribution/admin/analytics').get(authJwt.verifyToken, authJwt.authAdmin, distributionController.getDistributionAnalytics)
+routes.route('/api/v1/distribution/admin/webhooks').get(authJwt.verifyToken, authJwt.authAdmin, distributionController.adminListWebhooks)
+routes.route('/api/v1/distribution/admin/deliveries').get(authJwt.verifyToken, authJwt.authAdmin, distributionController.adminListDeliveryLogs)
+
+routes.route('/api/v1/partners/apply').post(authJwt.verifyToken, partnerController.createApplication)
+routes.route('/api/v1/partners/application').get(authJwt.verifyToken, partnerController.getMyApplication)
+routes.route('/api/v1/partners/agreements').get(authJwt.verifyToken, partnerController.getMyAgreements)
+routes.route('/api/v1/partners/agreements').post(authJwt.verifyToken, partnerController.acceptAgreement)
+routes.route('/api/v1/partners/sandbox/credentials').post(authJwt.verifyToken, partnerController.getSandboxCredentials)
+routes.route('/api/v1/partners/admin/applications').get(authJwt.verifyToken, authJwt.authAdmin, partnerController.adminListApplications)
+routes.route('/api/v1/partners/admin/applications/:id').get(authJwt.verifyToken, authJwt.authAdmin, partnerController.adminGetApplication)
+routes.route('/api/v1/partners/admin/applications/:id/status').patch(authJwt.verifyToken, authJwt.authAdmin, partnerController.adminUpdateApplicationStatus)
+routes.route('/api/v1/partners/admin/sales-pipeline').get(authJwt.verifyToken, authJwt.authAdmin, partnerController.adminGetSalesPipeline)
+routes.route('/api/v1/partners/admin/agreements').get(authJwt.verifyToken, authJwt.authAdmin, partnerController.adminListAgreements)
+
+routes.route('/api/v1/pilot/metrics').get(authJwt.verifyToken, authJwt.authAdmin, pilotController.getPilotMetrics)
+
+routes.route('/api/v1/estateos/health').get(estateosController.health)
+routes.route('/api/v1/estateos/readiness').get(estateosController.readiness)
+routes.route('/api/v1/estateos/env-validation').get(authJwt.verifyToken, authJwt.authAdmin, estateosController.envValidationStatus)
+
+export default routes

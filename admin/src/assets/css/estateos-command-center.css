@@ -1,0 +1,132 @@
+.estateos-command-center {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 0 auto;
+  max-width: 1320px;
+  padding: 32px 20px 56px;
+}
+
+.estateos-hero,
+.estateos-section {
+  padding: 24px;
+}
+
+.estateos-hero {
+  align-items: flex-start;
+  background: #111827;
+  border-radius: 16px;
+  color: #fff;
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+}
+
+.estateos-hero h1 {
+  font-size: 34px;
+  line-height: 1.1;
+  margin: 4px 0 12px;
+}
+
+.estateos-hero p {
+  color: #d1d5db;
+  margin: 0;
+  max-width: 760px;
+}
+
+.estateos-eyebrow {
+  color: #93c5fd !important;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.estateos-counts {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
+.estateos-count-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+}
+
+.estateos-count-card span {
+  color: #6b7280;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.estateos-count-card strong {
+  color: #111827;
+  font-size: 28px;
+}
+
+.estateos-section {
+  border-radius: 16px !important;
+}
+
+.estateos-section-header {
+  align-items: flex-start;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.estateos-section-header h2,
+.estateos-recent h3 {
+  margin: 0;
+}
+
+.estateos-section-header p {
+  color: #6b7280;
+  margin: 6px 0 0;
+}
+
+.estateos-recent-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.estateos-recent {
+  min-width: 0;
+}
+
+.estateos-panel-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.estateos-json {
+  background: #0f172a;
+  border-radius: 12px;
+  color: #dbeafe;
+  font-size: 12px;
+  line-height: 1.5;
+  max-height: 520px;
+  overflow: auto;
+  padding: 16px;
+  white-space: pre-wrap;
+}
+
+@media only screen and (width <= 960px) {
+  .estateos-command-center {
+    padding: 20px 12px 40px;
+  }
+
+  .estateos-hero {
+    flex-direction: column;
+  }
+
+  .estateos-section-header {
+    flex-direction: column;
+  }
+}

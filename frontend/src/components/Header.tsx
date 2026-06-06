@@ -33,6 +33,13 @@ import {
   PersonOutline as SignUpIcon,
   PrivacyTip as PrivacyIcon,
   Cookie as CookiePolicyIcon,
+  Api as ApiDocsIcon,
+  Inventory as DataProductsIcon,
+  Handshake as PartnersIcon,
+  Storefront as SupplyIcon,
+  DeveloperBoard as ApiBuyerIcon,
+  VerifiedUser as VerifierIcon,
+  FavoriteBorder as DemandIcon,
 } from '@mui/icons-material'
 import { toast } from 'react-toastify'
 import { CircleFlag } from 'react-circle-flags'
@@ -422,6 +429,79 @@ const Header = ({
                     <ListItemIcon><TosIcon /></ListItemIcon>
                     <ListItemText primary={strings.TOS} />
                   </ListItem>
+                  <ListItem
+                    onClick={() => {
+                      navigate('/api-docs')
+                      handleSideMenuClose()
+                    }}
+                  >
+                    <ListItemIcon><ApiDocsIcon /></ListItemIcon>
+                    <ListItemText primary="API Docs" />
+                  </ListItem>
+                  <ListItem
+                    onClick={() => {
+                      navigate('/api/data-products')
+                      handleSideMenuClose()
+                    }}
+                  >
+                    <ListItemIcon><DataProductsIcon /></ListItemIcon>
+                    <ListItemText primary="Data Products" />
+                  </ListItem>
+                  {isSignedIn && (
+                    <ListItem
+                      onClick={() => {
+                        navigate('/partners')
+                        handleSideMenuClose()
+                      }}
+                    >
+                      <ListItemIcon><PartnersIcon /></ListItemIcon>
+                      <ListItemText primary="Partners" />
+                    </ListItem>
+                  )}
+                  {isSignedIn && (
+                    <ListItem
+                      onClick={() => {
+                        navigate('/supply')
+                        handleSideMenuClose()
+                      }}
+                    >
+                      <ListItemIcon><SupplyIcon /></ListItemIcon>
+                      <ListItemText primary="Supply" />
+                    </ListItem>
+                  )}
+                  {isSignedIn && (
+                    <ListItem
+                      onClick={() => {
+                        navigate('/api')
+                        handleSideMenuClose()
+                      }}
+                    >
+                      <ListItemIcon><ApiBuyerIcon /></ListItemIcon>
+                      <ListItemText primary="API Buyer" />
+                    </ListItem>
+                  )}
+                  {isSignedIn && (
+                    <ListItem
+                      onClick={() => {
+                        navigate('/verifier')
+                        handleSideMenuClose()
+                      }}
+                    >
+                      <ListItemIcon><VerifierIcon /></ListItemIcon>
+                      <ListItemText primary="Verifier" />
+                    </ListItem>
+                  )}
+                  {isSignedIn && (
+                    <ListItem
+                      onClick={() => {
+                        navigate('/demand')
+                        handleSideMenuClose()
+                      }}
+                    >
+                      <ListItemIcon><DemandIcon /></ListItemIcon>
+                      <ListItemText primary="Demand" />
+                    </ListItem>
+                  )}
                   <ListItem
                     onClick={() => {
                       navigate('/contact')

@@ -42,6 +42,10 @@ jobs:
            npm install --force
            npm run lint
            npm run build
+    - name: Forbidden pattern check
+      run: |
+           node scripts/checkForbiddenPatterns.js
+
     - name: Build mobile app
       run: |
            cd ./mobile

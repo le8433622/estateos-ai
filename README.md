@@ -12,6 +12,7 @@ Start here before implementation:
 - `docs/IMPLEMENTATION_CONTRACT.md` - master implementation contract.
 - `docs/PRODUCT.md` - EstateOS product architecture.
 - `docs/SUPER_TASK_PLAN.md` - phased implementation master plan.
+- `docs/SEED_DEMO.md` - safe dev/demo seed workflow for the EstateOS kernel.
 
 Core product doctrine:
 
