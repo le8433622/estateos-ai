@@ -76,7 +76,10 @@ const main = async () => {
   await check('GET /api/v1/pilot/metrics (unauthenticated → 403)', '/api/v1/pilot/metrics', 403)
 
   // Partner application endpoint shape (unauthenticated → 403)
-  await check('POST /api/v1/partners/apply (unauthenticated → 403)', '/api/v1/partners/apply', 403)
+  await check('POST /api/v1/partners/apply (unauthenticated → 403)', async () => {
+    const res = await fetch(`${BASE_URL}/api/v1/partners/apply`, { method: 'POST' })
+    if (res.status !== 403) throw new Error(`expected 403, got ${res.status}`)
+  })
 
   // Forbidden labels check from compiled constants
   try {
