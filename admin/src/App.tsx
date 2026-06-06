@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useEffect, useState } from 'react'
-import { createBrowserRouter, RouterProvider, Outlet, useLocation } from 'react-router-dom'
+import { createHashRouter, RouterProvider, Outlet, useLocation } from 'react-router-dom'
 import { NotificationProvider } from '@/context/NotificationContext'
 import { UserProvider } from '@/context/UserContext'
 import { RecaptchaProvider } from '@/context/RecaptchaContext'
@@ -77,7 +77,7 @@ const AppLayout = () => {
   )
 }
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: '/',
     element: <AppLayout />,
