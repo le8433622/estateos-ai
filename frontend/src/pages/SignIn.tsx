@@ -59,15 +59,15 @@ const SignIn = () => {
         } else {
           setError(false)
 
-          const user = await UserService.getUser(res.data._id)
-          setUser(user)
+          setUser(res.data)
           setUserLoaded(true)
         }
       } else {
         setError(true)
         setBlacklisted(false)
       }
-    } catch {
+    } catch (err) {
+      console.debug('[SignIn] handleSubmit error', err)
       setError(true)
       setBlacklisted(false)
     }

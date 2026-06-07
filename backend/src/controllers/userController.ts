@@ -557,6 +557,11 @@ export const signin = async (req: Request, res: Response) => {
       //
       const cookieOptions: CookieOptions = helper.clone(env.COOKIE_OPTIONS)
 
+      // When behind a reverse proxy (Render), req.secure reflects X-Forwarded-Proto
+      if (req.secure) {
+        cookieOptions.secure = true
+      }
+
       if (stayConnected) {
         //
         // Cookies can no longer set an expiration date more than 400 days in the future.

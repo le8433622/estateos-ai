@@ -23,6 +23,9 @@ import * as helper from './utils/helper'
 
 const app = express()
 
+// Trust Render proxy — req.secure reflects X-Forwarded-Proto
+app.set('trust proxy', 1)
+
 app.use(helmet.contentSecurityPolicy())
 app.use(helmet.dnsPrefetchControl())
 app.use(helmet.crossOriginEmbedderPolicy())
