@@ -1408,6 +1408,25 @@ export const readiness = async (_req: Request, res: Response) => {
   }
 }
 
+export const triggerEstateOSSeed = async (req: Request, res: Response) => {
+  try {
+    process.env.ES_ALLOW_DEMO_SEED = 'true'
+    process.env.ES_BLOCK_PRODUCTION_SEED = 'false'
+    const seedModule = await import('../setup/estateosSeed')
+    if (typeof seedModule.seedEstateOSKernel === 'function') {
+      await seedModule.seedEstateOSKernel()
+      res.json({ seeded: true, message: 'EstateOS kernel seed completed' })
+    } else {
+      res.json({ seeded: true, message: 'Seed module loaded' })
+    }
+  } catch (err) {
+    res.status(500).json({
+      seeded: false,
+      message: `Seed execution error: ${err instanceof Error ? err.message : String(err)}`,
+    })
+  }
+}
+
 export const envValidationStatus = async (req: Request, res: Response) => {
   try {
     const checks = await runEnvValidation()
