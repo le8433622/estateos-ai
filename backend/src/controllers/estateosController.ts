@@ -1412,7 +1412,7 @@ export const triggerEstateOSSeed = async (req: Request, res: Response) => {
   try {
     process.env.ES_ALLOW_DEMO_SEED = 'true'
     process.env.ES_BLOCK_PRODUCTION_SEED = 'false'
-    const seedModule = await import('../setup/estateosSeed')
+    const seedModule = await import('../setup/estateosSeed.js')
     if (typeof seedModule.seedEstateOSKernel === 'function') {
       await seedModule.seedEstateOSKernel()
       res.json({ seeded: true, message: 'EstateOS kernel seed completed' })
