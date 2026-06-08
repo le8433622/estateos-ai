@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { Paper, Button, Typography, Chip, Table, TableBody, TableCell, TableHead, TableRow, Stack } from '@mui/material'
+import {
+  Paper, Button, Typography, Chip, Table, TableBody, TableCell, TableHead, TableRow,
+  Stack, Dialog, DialogTitle, DialogContent, DialogActions, RadioGroup, FormControlLabel,
+  Radio, FormControl, FormLabel,
+} from '@mui/material'
 import { toast } from 'react-toastify'
 import Layout from '@/components/Layout'
 import axiosInstance from '@/services/axiosInstance'
 
 import '@/assets/css/api-docs.css'
+
+const VERIFICATION_PACKAGES = [
+  { package_type: 'basic_cleanup_100k', name: 'Basic Cleanup', price: '100,000 VND' },
+  { package_type: 'verified_photo_contact_location_300k', name: 'Verified Photo / Contact / Location', price: '300,000 VND' },
+  { package_type: 'field_check_500k_1m', name: 'Field Check', price: '750,000 VND' },
+]
 
 const ActivationSupplyDetail = () => {
   const { id } = useParams()
@@ -13,6 +23,9 @@ const ActivationSupplyDetail = () => {
   const [property, setProperty] = useState<any>(null)
   const [evidence, setEvidence] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+  const [pkgDialogOpen, setPkgDialogOpen] = useState(false)
+  const [selectedPkg, setSelectedPkg] = useState(VERIFICATION_PACKAGES[0].package_type)
+  const [requesting, setRequesting] = useState(false)
 
   useEffect(() => {
     const load = async () => {
@@ -30,6 +43,21 @@ const ActivationSupplyDetail = () => {
  load() 
 }
   }, [id])
+
+  const handleRequestPackage = async () => {
+    setRequesting(true)
+    try {
+      await axiosInstance.post('/api/v1/billing/verification-packages', {
+        property_id: id,
+        package_type: selectedPkg,
+      }, { withCredentials: true })
+      toast.success('Verification package requested. Invoice issued.')
+      setPkgDialogOpen(false)
+    } catch (err: any) {
+      toast.error(err?.response?.data?.message || 'Failed to request package')
+    }
+    setRequesting(false)
+  }
 
   if (loading) {
     return (
@@ -97,12 +125,38 @@ const ActivationSupplyDetail = () => {
                 </TableBody>
               </Table>
             )}
-            <Button variant="outlined" sx={{ mt: 2 }} onClick={() => {
-              navigate(`/supply/${id}/evidence/new`)
-            }}>Attach Evidence</Button>
+            <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
+              <Button variant="outlined" onClick={() => navigate(`/supply/${id}/evidence/new`)}>Attach Evidence</Button>
+              <Button variant="contained" onClick={() => setPkgDialogOpen(true)}>Request Verification</Button>
+            </Stack>
           </Paper>
 
           <Button variant="text" onClick={() => navigate('/supply')}>Back to Supply Dashboard</Button>
+
+          <Dialog open={pkgDialogOpen} onClose={() => setPkgDialogOpen(false)}>
+            <DialogTitle>Request Verification Package</DialogTitle>
+            <DialogContent>
+              <FormControl>
+                <FormLabel>Select package type</FormLabel>
+                <RadioGroup value={selectedPkg} onChange={(e) => setSelectedPkg(e.target.value)}>
+                  {VERIFICATION_PACKAGES.map((pkg) => (
+                    <FormControlLabel
+                      key={pkg.package_type}
+                      value={pkg.package_type}
+                      control={<Radio />}
+                      label={<Typography variant="body2"><strong>{pkg.name}</strong> — {pkg.price}</Typography>}
+                    />
+                  ))}
+                </RadioGroup>
+              </FormControl>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => setPkgDialogOpen(false)} disabled={requesting}>Cancel</Button>
+              <Button variant="contained" onClick={handleRequestPackage} disabled={requesting}>
+                {requesting ? 'Requesting...' : 'Request Package'}
+              </Button>
+            </DialogActions>
+          </Dialog>
         </Stack>
       </main>
     </Layout>
