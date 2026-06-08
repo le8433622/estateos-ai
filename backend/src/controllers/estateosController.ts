@@ -1424,7 +1424,6 @@ export const readiness = async (_req: Request, res: Response) => {
 
 export const debugB2Test = async (_req: Request, res: Response) => {
   try {
-    const { uploadFile } = await import('../services/storageService')
     const key = `debug-test/${Date.now()}.txt`
     const result = await uploadFile(key, Buffer.from('B2 connectivity test'), 'text/plain')
     res.json({
