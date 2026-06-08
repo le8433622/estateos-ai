@@ -555,7 +555,7 @@ const Header = ({
                 </Button>
               )}
               {!hideSignin && !isSignedIn && isLoaded && (
-                <Button variant="contained" startIcon={<LoginIcon />} href="/sign-in" disableElevation fullWidth className="btn btn-auth">
+                <Button variant="contained" startIcon={<LoginIcon />} onClick={() => navigate('/sign-in')} disableElevation fullWidth className="btn btn-auth">
                   <span className="btn-auth-txt">{strings.SIGN_IN}</span>
                 </Button>
               )}

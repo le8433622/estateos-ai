@@ -513,7 +513,7 @@ const Checkout = () => {
                               <span>
                                 <span>{commonStrings.EMAIL_ALREADY_REGISTERED}</span>
                                 <span> </span>
-                                <a href={`/sign-in?p=${property._id}&l=${location._id}&f=${from.getTime()}&t=${to.getTime()}&from=checkout`}>{strings.SIGN_IN}</a>
+                                <a href={`/#/sign-in?p=${property._id}&l=${location._id}&f=${from.getTime()}&t=${to.getTime()}&from=checkout`}>{strings.SIGN_IN}</a>
                               </span>
                             ))
                               || ''}
