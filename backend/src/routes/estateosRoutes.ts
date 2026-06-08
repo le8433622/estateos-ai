@@ -1,4 +1,5 @@
 import express from 'express'
+import multer from 'multer'
 import authJwt from '../middlewares/authJwt'
 import * as estateosController from '../controllers/estateosController'
 import * as billingController from '../controllers/billingController'
@@ -26,7 +27,7 @@ routes.route('/api/v1/properties/:id/trust-state').get(estateosController.getTru
 routes.route('/api/v1/properties/:id').get(estateosController.getProperty)
 routes.route('/api/v1/supply/properties').post(authJwt.verifyToken, estateosController.createSupplyProperty)
 routes.route('/api/v1/supply/properties/:id/evidence').get(authJwt.verifyToken, estateosController.listPropertyEvidence)
-routes.route('/api/v1/supply/properties/:id/evidence').post(authJwt.verifyToken, estateosController.attachEvidence)
+routes.route('/api/v1/supply/properties/:id/evidence').post([authJwt.verifyToken, multer({ storage: multer.memoryStorage(), limits: { fileSize: 50 * 1024 * 1024 } }).single('file')], estateosController.attachEvidence)
 routes.route('/api/v1/verification/jobs').get(authJwt.verifyToken, estateosController.listVerificationJobs)
 routes.route('/api/v1/verification/jobs').post(authJwt.verifyToken, estateosController.createVerificationJob)
 routes.route('/api/v1/verification/jobs/:id/submit').post(authJwt.verifyToken, estateosController.submitVerificationReport)

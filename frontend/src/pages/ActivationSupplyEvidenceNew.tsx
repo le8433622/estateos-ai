@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { Button, Paper, TextField, MenuItem, Stack } from '@mui/material'
+import { Button, Paper, TextField, MenuItem, Stack, Typography } from '@mui/material'
 import { toast } from 'react-toastify'
 import Layout from '@/components/Layout'
 import axiosInstance from '@/services/axiosInstance'
@@ -19,9 +19,11 @@ const EVIDENCE_TYPES = [
 const ActivationSupplyEvidenceNew = () => {
   const { id } = useParams()
   const navigate = useNavigate()
+  const fileRef = useRef<HTMLInputElement>(null)
   const [evidenceType, setEvidenceType] = useState('photo')
   const [summary, setSummary] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const [fileName, setFileName] = useState('')
 
   const handleSubmit = async () => {
     if (!summary) {
@@ -30,12 +32,18 @@ const ActivationSupplyEvidenceNew = () => {
     }
     setSubmitting(true)
     try {
-      await axiosInstance.post(`/api/v1/supply/properties/${id}/evidence`, {
-        evidence_type: evidenceType,
-        visibility: 'private',
-        redaction_state: 'restricted',
-        summary,
-      }, { withCredentials: true })
+      const formData = new FormData()
+      formData.append('evidence_type', evidenceType)
+      formData.append('visibility', 'private')
+      formData.append('redaction_state', 'restricted')
+      formData.append('summary', summary)
+      if (fileRef.current?.files?.[0]) {
+        formData.append('file', fileRef.current.files[0])
+      }
+      await axiosInstance.post(`/api/v1/supply/properties/${id}/evidence`, formData, {
+        withCredentials: true,
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
       toast.success('Evidence attached')
       navigate(`/supply/${id}`)
     } catch {
@@ -60,6 +68,11 @@ const ActivationSupplyEvidenceNew = () => {
             </TextField>
             <TextField label="Summary (public)" value={summary} onChange={(e) => setSummary(e.target.value)} multiline minRows={2} fullWidth
               helperText="This summary will be visible in trust state. Raw evidence file stays private." />
+            <Button variant="outlined" component="label">
+              {fileName || 'Choose File'}
+              <input ref={fileRef} type="file" hidden onChange={(e) => setFileName(e.target.files?.[0]?.name || '')} />
+            </Button>
+            {fileName && <Typography variant="caption">{fileName}</Typography>}
             <Button variant="contained" onClick={handleSubmit} disabled={submitting}>
               {submitting ? 'Attaching...' : 'Attach Evidence'}
             </Button>

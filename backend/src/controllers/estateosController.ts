@@ -17,6 +17,7 @@ import DataUsageLedger from '../models/DataUsageLedger'
 import RoyaltyEligibility from '../models/RoyaltyEligibility'
 import DemandProfile from '../models/DemandProfile'
 import SavedProperty from '../models/SavedProperty'
+import { uploadFile } from '../services/storageService'
 import {
   API_SCOPES,
   ACCOUNT_PROFILE_TYPES,
@@ -527,13 +528,26 @@ export const attachEvidence = async (req: Request, res: Response) => {
       throw new EstateOSHttpError(400, `Unsupported evidence_type. Allowed: ${EVIDENCE_TYPES.join(', ')}`)
     }
 
+    let fileRef = req.body?.file_ref || ''
+
+    if (req.file) {
+      const ext = req.file.originalname.split('.').pop() || 'bin'
+      const key = `estateos/evidence/${id}/${Date.now()}_${Math.random().toString(36).slice(2, 8)}.${ext}`
+      const b2Url = await uploadFile(key, req.file.buffer, req.file.mimetype)
+      if (b2Url) {
+        fileRef = b2Url
+      } else {
+        fileRef = key
+      }
+    }
+
     const claim = await PropertyClaim.findOne({ property_id: property._id, source_account_id: property.source_account_id })
     const evidence = await PropertyEvidence.create({
       property_id: property._id,
       claim_id: claim?._id,
       uploaded_by_account_id: accountProfile._id,
       evidence_type: evidenceType,
-      file_ref: req.body?.file_ref,
+      file_ref: fileRef,
       visibility: req.body?.visibility || 'private',
       redaction_state: req.body?.redaction_state || (evidenceType === 'redacted_legal_doc' ? 'redacted' : 'restricted'),
       review_status: req.body?.review_status || 'submitted',
