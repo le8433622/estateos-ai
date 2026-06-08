@@ -38,15 +38,18 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children, refreshKey
 
     const currentUser = UserService.getCurrentUser()
     if (!currentUser) {
+      console.debug('[UserContext] no current user in localStorage')
       await exit()
       return
     }
 
     try {
       const status = await UserService.validateAccessToken()
+      console.debug('[UserContext] validateAccessToken status:', status)
 
       if (status === 200) {
         const _user = await UserService.getUser(currentUser._id)
+        console.debug('[UserContext] getUser result:', _user ? 'found' : 'null')
         if (_user) {
           if (_user.blacklisted) {
             setUser(_user)
@@ -59,9 +62,11 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children, refreshKey
           await exit()
         }
       } else {
+        console.debug('[UserContext] validateAccessToken failed, exiting')
         await exit()
       }
-    } catch {
+    } catch (err) {
+      console.debug('[UserContext] checkUser error:', err)
       await exit()
     } finally {
       setUserLoaded(true)

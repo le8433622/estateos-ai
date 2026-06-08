@@ -585,6 +585,7 @@ export const signin = async (req: Request, res: Response) => {
         email: user.email,
         fullName: user.fullName,
         language: user.language,
+        verified: user.verified,
         enableEmailNotifications: user.enableEmailNotifications,
         blacklisted: user.blacklisted,
         avatar: user.avatar,
