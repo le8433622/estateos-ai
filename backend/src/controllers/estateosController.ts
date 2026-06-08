@@ -1424,19 +1424,33 @@ export const readiness = async (_req: Request, res: Response) => {
 
 export const debugB2Test = async (_req: Request, res: Response) => {
   try {
-    const key = `debug-test/${Date.now()}.txt`
-    const result = await uploadFile(key, Buffer.from('B2 connectivity test'), 'text/plain')
-    res.json({
-      b2_configured: Boolean(process.env.ES_B2_KEY_ID && process.env.ES_B2_APPLICATION_KEY && process.env.ES_B2_BUCKET),
-      key_id_prefix: (process.env.ES_B2_KEY_ID || '').slice(0, 8),
-      bucket: process.env.ES_B2_BUCKET,
-      endpoint: process.env.ES_B2_ENDPOINT,
-      region: process.env.ES_B2_REGION,
-      upload_result: result || '(empty - fallback used)',
+    const { S3Client, PutObjectCommand } = await import('@aws-sdk/client-s3')
+    const client = new S3Client({
+      region: process.env.ES_B2_REGION || 'us-east-005',
+      endpoint: process.env.ES_B2_ENDPOINT || 'https://s3.us-east-005.backblazeb2.com',
+      credentials: {
+        accessKeyId: process.env.ES_B2_KEY_ID || '',
+        secretAccessKey: process.env.ES_B2_APPLICATION_KEY || '',
+      },
+      forcePathStyle: true,
     })
+    const key = `debug-test/${Date.now()}.txt`
+    await client.send(new PutObjectCommand({
+      Bucket: process.env.ES_B2_BUCKET || 'estateos-storage',
+      Key: key,
+      Body: Buffer.from('B2 connectivity test'),
+      ContentType: 'text/plain',
+    }))
+    res.json({ b2_upload: 'ok', key })
   } catch (err) {
     res.status(500).json({
-      b2_error: err instanceof Error ? { name: err.name, message: err.message, stack: err.stack?.slice(0, 300) } : String(err),
+      b2_upload: 'fail',
+      error: {
+        name: err instanceof Error ? err.name : 'unknown',
+        message: err instanceof Error ? err.message : String(err),
+        code: (err as any).code || undefined,
+        statusCode: (err as any).$metadata?.httpStatusCode || undefined,
+      },
     })
   }
 }
