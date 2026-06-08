@@ -38,6 +38,7 @@ import {
   Hub as DistributionIcon,
   Handshake as PartnersIcon,
   Rocket as PilotIcon,
+  RocketLaunch as LaunchIcon,
 } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 import * as movininTypes from ':movinin-types'
@@ -357,6 +358,15 @@ const Header = ({
                 >
                   <ListItemIcon><PilotIcon /></ListItemIcon>
                   <ListItemText primary="Pilot" />
+                </ListItem>
+                <ListItem
+                  onClick={() => {
+                    navigate('/estateos/launch')
+                    handleSideMenuClose()
+                  }}
+                >
+                  <ListItemIcon><LaunchIcon /></ListItemIcon>
+                  <ListItemText primary="Launch" />
                 </ListItem>
                 <ListItem
                   onClick={() => {
