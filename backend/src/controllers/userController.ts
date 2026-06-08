@@ -562,6 +562,10 @@ export const signin = async (req: Request, res: Response) => {
         cookieOptions.secure = true
       }
 
+      // onrender.com is on the Public Suffix List → cross-site between frontend & backend
+      // SameSite=None is required so the browser sends the cookie on subresource requests
+      cookieOptions.sameSite = 'none'
+
       if (stayConnected) {
         //
         // Cookies can no longer set an expiration date more than 400 days in the future.
@@ -682,6 +686,15 @@ export const socialSignin = async (req: Request, res: Response) => {
     // Authentication cookies are protected against XST attacks as well via allowedMethods middleware.
     //
     const cookieOptions: CookieOptions = helper.clone(env.COOKIE_OPTIONS)
+
+    // When behind a reverse proxy (Render), req.secure reflects X-Forwarded-Proto
+    if (req.secure) {
+      cookieOptions.secure = true
+    }
+
+    // onrender.com is on the Public Suffix List → cross-site between frontend & backend
+    // SameSite=None is required so the browser sends the cookie on subresource requests
+    cookieOptions.sameSite = 'none'
 
     if (stayConnected) {
       //
