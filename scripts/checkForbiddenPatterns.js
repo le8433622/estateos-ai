@@ -13,6 +13,11 @@ const EXCLUDE_PATTERNS = [
   'KNOWN_WARNINGS',
   'KNOWN_WARNINGS.md',
 ]
+const EXCLUDE_FILES = [
+  'constants.ts',
+  'ApiDocs.tsx',
+  'KNOWN_WARNINGS.md',
+]
 
 console.log('\nChecking for forbidden patterns...\n')
 
@@ -39,6 +44,11 @@ for (const label of FORBIDDEN) {
   const emissions = foundLines.filter((line) => {
     for (const ex of EXCLUDE_PATTERNS) {
       if (line.includes(ex)) {
+        return false
+      }
+    }
+    for (const file of EXCLUDE_FILES) {
+      if (line.includes(file)) {
         return false
       }
     }

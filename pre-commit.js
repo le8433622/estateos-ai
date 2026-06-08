@@ -439,6 +439,19 @@ const main = async () => {
       tasks.push(Promise.all(projectTasks))
     }
 
+    // Run forbidden label check across all source directories
+    try {
+      const { stdout, stderr } = await execAsync('node scripts/checkForbiddenPatterns.js', { timeout: 120000 })
+      if (stdout) { process.stdout.write(stdout) }
+      if (stderr) { process.stderr.write(stderr) }
+      logger.log(`${chalk.green('Forbidden pattern check passed.')}`)
+    } catch (err) {
+      if (err.stdout) { process.stdout.write(err.stdout) }
+      if (err.stderr) { process.stderr.write(err.stderr) }
+      logger.logError('Forbidden pattern check failed.')
+      process.exit(1)
+    }
+
     // Wait for all tasks to complete, and if any fails, it will throw an error
     await Promise.all(tasks)
 
