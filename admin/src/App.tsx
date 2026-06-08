@@ -49,6 +49,7 @@ const EstateOSDistributionConsole = lazy(() => import('@/pages/EstateOSDistribut
 const EstateOSPartnersConsole = lazy(() => import('@/pages/EstateOSPartnersConsole'))
 const EstateOSPilotDashboard = lazy(() => import('@/pages/EstateOSPilotDashboard'))
 const EstateOSLaunchDashboard = lazy(() => import('@/pages/EstateOSLaunchDashboard'))
+const EstateOSPropertyReview = lazy(() => import('@/pages/EstateOSPropertyReview'))
 
 const AppLayout = () => {
   const location = useLocation()
@@ -123,6 +124,7 @@ const router = createHashRouter([
       { path: '/estateos/partners', element: <EstateOSPartnersConsole /> },
       { path: '/estateos/pilot', element: <EstateOSPilotDashboard /> },
       { path: '/estateos/launch', element: <EstateOSLaunchDashboard /> },
+      { path: '/estateos/property-review', element: <EstateOSPropertyReview /> },
       { path: '*', element: <NoMatch /> }
     ]
   }

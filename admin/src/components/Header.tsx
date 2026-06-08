@@ -39,6 +39,7 @@ import {
   Handshake as PartnersIcon,
   Rocket as PilotIcon,
   RocketLaunch as LaunchIcon,
+  RateReview as ReviewIcon,
 } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 import * as movininTypes from ':movinin-types'
@@ -322,6 +323,15 @@ const Header = ({
                 >
                   <ListItemIcon><BillingIcon /></ListItemIcon>
                   <ListItemText primary="Billing" />
+                </ListItem>
+                <ListItem
+                  onClick={() => {
+                    navigate('/estateos/property-review')
+                    handleSideMenuClose()
+                  }}
+                >
+                  <ListItemIcon><ReviewIcon /></ListItemIcon>
+                  <ListItemText primary="Property Review" />
                 </ListItem>
                 <ListItem
                   onClick={() => {
