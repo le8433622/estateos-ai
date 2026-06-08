@@ -291,6 +291,18 @@ export const CDN_LOCATIONS = __env__('MI_CDN_LOCATIONS', true)
 export const CDN_TEMP_LOCATIONS = __env__('MI_CDN_TEMP_LOCATIONS', true)
 
 /**
+ * Backblaze B2 / S3-compatible object storage.
+ * When configured, uploaded files are stored in B2 instead of local CDN.
+ * All vars are optional; local CDN is used as fallback.
+ */
+export const B2_KEY_ID = __env__('ES_B2_KEY_ID', false)
+export const B2_APPLICATION_KEY = __env__('ES_B2_APPLICATION_KEY', false)
+export const B2_BUCKET = __env__('ES_B2_BUCKET', false, 'estateos-storage')
+export const B2_REGION = __env__('ES_B2_REGION', false, 'us-east-005')
+export const B2_ENDPOINT = __env__('ES_B2_ENDPOINT', false, 'https://s3.us-east-005.backblazeb2.com')
+export const B2_PUBLIC_URL = __env__('ES_B2_PUBLIC_URL', false)
+
+/**
  * Admin host.
  *
  * @type {string}
