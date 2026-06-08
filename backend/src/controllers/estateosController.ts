@@ -1422,6 +1422,26 @@ export const readiness = async (_req: Request, res: Response) => {
   }
 }
 
+export const debugB2Test = async (_req: Request, res: Response) => {
+  try {
+    const { uploadFile } = await import('../services/storageService')
+    const key = `debug-test/${Date.now()}.txt`
+    const result = await uploadFile(key, Buffer.from('B2 connectivity test'), 'text/plain')
+    res.json({
+      b2_configured: Boolean(process.env.ES_B2_KEY_ID && process.env.ES_B2_APPLICATION_KEY && process.env.ES_B2_BUCKET),
+      key_id_prefix: (process.env.ES_B2_KEY_ID || '').slice(0, 8),
+      bucket: process.env.ES_B2_BUCKET,
+      endpoint: process.env.ES_B2_ENDPOINT,
+      region: process.env.ES_B2_REGION,
+      upload_result: result || '(empty - fallback used)',
+    })
+  } catch (err) {
+    res.status(500).json({
+      b2_error: err instanceof Error ? { name: err.name, message: err.message, stack: err.stack?.slice(0, 300) } : String(err),
+    })
+  }
+}
+
 export const triggerEstateOSSeed = async (req: Request, res: Response) => {
   try {
     process.env.ES_ALLOW_DEMO_SEED = 'true'
