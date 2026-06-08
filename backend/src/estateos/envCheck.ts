@@ -144,6 +144,20 @@ const checkApiPlansConfig = (): EnvValidationResult => {
   }
 }
 
+const checkB2Storage = (): EnvValidationResult => {
+  const keyId = process.env.ES_B2_KEY_ID
+  const appKey = process.env.ES_B2_APPLICATION_KEY
+  const bucket = process.env.ES_B2_BUCKET
+  const configured = Boolean(keyId && appKey && bucket)
+  return {
+    name: 'b2_storage_configured',
+    passed: configured,
+    message: configured
+      ? `B2 configured (bucket: ${bucket})`
+      : 'B2 not configured — using local CDN fallback',
+  }
+}
+
 const checkRequiredCdnPaths = (): EnvValidationResult => {
   const required = [
     'MI_CDN_USERS',
@@ -174,6 +188,7 @@ export const runEnvValidation = async (): Promise<EnvValidationResult[]> => {
     checkForbiddenLabels(),
     checkApiPlansConfig(),
     checkRequiredCdnPaths(),
+    checkB2Storage(),
   ]
 
   const dynamicChecks: EnvValidationResult[] = await Promise.all([
