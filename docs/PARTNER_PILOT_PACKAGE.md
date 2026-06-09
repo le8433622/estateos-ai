@@ -1,5 +1,9 @@
 # EstateOS Partner Pilot Package
 
+## Documentation Compliance Notice
+
+This document is governed by `docs/DOCUMENTATION_COMPLIANCE.md`. Any implementation, change, deployment, or completion claim touching this document must record the mandatory Documentation Compliance Checkpoint with `Decision: PASS`.
+
 ## What EstateOS Offers Partners
 
 EstateOS provides API-grade structured property data for Vietnam's real estate market. Our data is claim-based, attributed, scored by quality, and verified through human operator checks.

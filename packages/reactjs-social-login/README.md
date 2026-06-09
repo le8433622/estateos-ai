@@ -1,6 +1,10 @@
 
 # reactjs-social-login
 
+## Documentation Compliance Notice
+
+This document is governed by `docs/DOCUMENTATION_COMPLIANCE.md`. Any implementation, change, deployment, or completion claim touching this document must record the mandatory Documentation Compliance Checkpoint with `Decision: PASS`.
+
 > Group social login for ReactJS
 >
 > 1. Facebook

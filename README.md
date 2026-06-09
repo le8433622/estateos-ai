@@ -1,5 +1,9 @@
 # EstateOS Network
 
+## Documentation Compliance Notice
+
+This document is governed by `docs/DOCUMENTATION_COMPLIANCE.md`. Any implementation, change, deployment, or completion claim touching this document must record the mandatory Documentation Compliance Checkpoint with `Decision: PASS`.
+
 EstateOS Network is a Real Estate Operating Network, not a generic property listing site.
 
 This repository is being transformed from a Movin' In technical shell into a platform for structured, attributable, verified, scored, API-accessible, AI-readable real estate data assets with deal-room context and future data rights.

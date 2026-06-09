@@ -1,5 +1,9 @@
 # EstateOS Seed And Demo Workflow
 
+## Documentation Compliance Notice
+
+This document is governed by `docs/DOCUMENTATION_COMPLIANCE.md`. Any implementation, change, deployment, or completion claim touching this document must record the mandatory Documentation Compliance Checkpoint with `Decision: PASS`.
+
 ## Purpose
 
 `npm run seed:estateos` creates development/demo data for validating the EstateOS operational kernel.

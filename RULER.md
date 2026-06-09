@@ -1,5 +1,9 @@
 # RULER.md
 
+## Documentation Compliance Notice
+
+This document is governed by `docs/DOCUMENTATION_COMPLIANCE.md`. Any implementation, change, deployment, or completion claim touching this document must record the mandatory Documentation Compliance Checkpoint with `Decision: PASS`.
+
 ## Purpose
 
 This file defines the non-negotiable implementation laws for EstateOS Network. If code conflicts with this file, the code is wrong.
@@ -17,6 +21,20 @@ EstateOS is not:
 ## Product Scope
 
 EstateOS exists to create structured, attributable, verified, scored, API-accessible, AI-readable property data assets with controlled visibility, demand context, deal-room history, and future data rights.
+
+## Law 0 - Documentation Compliance Is Mandatory
+
+Every implementation must pass `docs/DOCUMENTATION_COMPLIANCE.md` before it can be considered valid.
+
+Required implementation:
+
+- Review `RULER.md`, `CHECKPOINT.md`, `AGENT.md`, `AGENTS.md`, `docs/IMPLEMENTATION_CONTRACT.md`, and `docs/DOCUMENTATION_COMPLIANCE.md` before non-trivial changes.
+- Review every affected domain document before changing behavior, data models, permissions, UI copy, APIs, AI behavior, seed data, deployment, or operations.
+- Record `PASS`, `N/A`, or `STOP` for every applicable checkpoint item.
+- Treat unchecked items as failed items.
+- Treat `STOP` as a hard block for implementation, commit, deploy, and completion.
+- If documents conflict, apply the stricter EstateOS safety, privacy, permission, audit, anti-bypass, and legal-risk rule.
+- If the stricter rule is unclear, stop and ask before changing behavior.
 
 ## Law 1 - Claim Before Truth
 
@@ -204,3 +222,4 @@ Required implementation:
 - [x] It defines forbidden labels and allowed cautious labels.
 - [x] It explains anti-bypass and anti-human-nature guardrails.
 - [x] It is written as a strict implementation ruler, not a vision document.
+- [x] It makes documentation compliance a Law 0 hard gate.

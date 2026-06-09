@@ -1,5 +1,9 @@
 # EstateOS Environment Configuration
 
+## Documentation Compliance Notice
+
+This document is governed by `docs/DOCUMENTATION_COMPLIANCE.md`. Any implementation, change, deployment, or completion claim touching this document must record the mandatory Documentation Compliance Checkpoint with `Decision: PASS`.
+
 ## Required Environment Variables
 
 All variables use the `MI_` prefix (Movin' In legacy). EstateOS-specific checks are defined in `backend/src/estateos/envCheck.ts`.

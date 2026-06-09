@@ -1,5 +1,9 @@
 # EstateOS Anti-Bypass Rules
 
+## Documentation Compliance Notice
+
+This document is governed by `docs/DOCUMENTATION_COMPLIANCE.md`. Any implementation, change, deployment, or completion claim touching this document must record the mandatory Documentation Compliance Checkpoint with `Decision: PASS`.
+
 ## Purpose
 
 This document defines anti-bypass, source protection, anti-scraping, and anti-overclaim rules for EstateOS Network.

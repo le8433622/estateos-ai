@@ -1,5 +1,9 @@
 # AGENTS.md — EstateOS AI Agent Operating Guide
 
+## Documentation Compliance Notice
+
+This document is governed by `docs/DOCUMENTATION_COMPLIANCE.md`. Any implementation, change, deployment, or completion claim touching this document must record the mandatory Documentation Compliance Checkpoint with `Decision: PASS`.
+
 ## Mission
 Transform this repository from a basic Movin' In fork into **EstateOS Network**: a Real Estate Operating Network for Vietnam.
 
@@ -11,6 +15,31 @@ EstateOS is not a generic listing website, not a rental clone, and not a transac
 Real estate is not merely a listing.
 Real estate is a data asset with source, claim, evidence, trust state, risk state, usage rights, API visibility, and transaction history.
 ```
+
+## Mandatory Documentation Compliance Gate
+
+Every agent must comply with `docs/DOCUMENTATION_COMPLIANCE.md` before editing, committing, deploying, or marking work complete.
+
+Required source documents for every non-trivial change:
+
+```txt
+RULER.md
+CHECKPOINT.md
+AGENT.md
+AGENTS.md
+docs/IMPLEMENTATION_CONTRACT.md
+docs/DOCUMENTATION_COMPLIANCE.md
+```
+
+The agent must also read every domain document affected by the change. Examples: `docs/ACCOUNT_MODEL.md` for permissions, `docs/TRUST_MODEL.md` for trust labels, `docs/API_MARKETPLACE.md` for API scopes, `docs/AI_AGENT_OS.md` for AI behavior, `docs/REVENUE_RIGHTS.md` for contribution/usage ledgers, and `docs/SECURITY_LAUNCH_CHECKLIST.md` for launch/security controls.
+
+Compliance is binary:
+
+- `PASS` means implemented and verified.
+- `N/A` means not applicable and must include a short reason.
+- `STOP` means blocked, unclear, conflicting, unsafe, or unverified.
+
+No `STOP` item may ship. If documentation conflicts, the stricter EstateOS safety, privacy, audit, permission, anti-bypass, or legal-risk rule wins. If unclear, stop and ask before changing behavior.
 
 ## Non-Negotiable Constraints
 
@@ -169,3 +198,5 @@ A change is complete only when:
 - AI boundaries are respected.
 - The UI copy matches EstateOS Network, not Movin' In rental clone.
 - Documentation is updated when product rules change.
+- The Documentation Compliance Checkpoint from `docs/DOCUMENTATION_COMPLIANCE.md` is recorded with `Decision: PASS`.
+- Every applicable EstateOS document rule is marked `PASS` or `N/A`; unchecked rules are not allowed.

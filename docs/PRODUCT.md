@@ -1,5 +1,9 @@
 # EstateOS Network Product Architecture
 
+## Documentation Compliance Notice
+
+This document is governed by `docs/DOCUMENTATION_COMPLIANCE.md`. Any implementation, change, deployment, or completion claim touching this document must record the mandatory Documentation Compliance Checkpoint with `Decision: PASS`.
+
 ## Purpose
 
 This document defines EstateOS Network as the product architecture for this repository.

@@ -1,5 +1,9 @@
 # CHECKPOINT.md
 
+## Documentation Compliance Notice
+
+This document is governed by `docs/DOCUMENTATION_COMPLIANCE.md`. Any implementation, change, deployment, or completion claim touching this document must record the mandatory Documentation Compliance Checkpoint with `Decision: PASS`.
+
 ## Purpose
 
 This file defines gates that every implementation must pass before being considered aligned with EstateOS Network.
@@ -9,6 +13,27 @@ Use this file before opening, reviewing, merging, or shipping any change.
 ## Scope
 
 These checkpoints apply to backend, frontend, mobile, admin, scripts, API, AI, documentation, and data model changes.
+
+## 0. Documentation Compliance Checkpoint
+
+Check:
+
+```txt
+Were the required source documents reviewed?
+Were all affected domain documents reviewed?
+Is every applicable rule marked PASS or N/A?
+Are all STOP items resolved before implementation, commit, deploy, and completion?
+```
+
+Required result:
+
+- `docs/DOCUMENTATION_COMPLIANCE.md` must be applied to every non-trivial change.
+- Required source documents must be reviewed: `RULER.md`, `CHECKPOINT.md`, `AGENT.md`, `AGENTS.md`, `docs/IMPLEMENTATION_CONTRACT.md`, and `docs/DOCUMENTATION_COMPLIANCE.md`.
+- Every affected domain document must be reviewed before changing related behavior.
+- Every applicable checkpoint must be marked `PASS`, `N/A`, or `STOP`.
+- `N/A` requires a short reason.
+- Any unchecked rule is treated as failed.
+- Any `STOP` blocks implementation, commit, deploy, and completion.
 
 ## 1. Product Alignment Checkpoint
 
@@ -157,6 +182,7 @@ Required result:
 Use this checklist in every PR or implementation review:
 
 ```txt
+- [ ] Documentation compliance passed
 - [ ] Product alignment passed
 - [ ] Permission checks passed
 - [ ] Audit logs added
@@ -175,3 +201,4 @@ Use this checklist in every PR or implementation review:
 - [x] It defines all checkpoint categories.
 - [x] It includes final PR checklist.
 - [x] It prevents product drift and unsafe implementation.
+- [x] It requires documentation compliance before every non-trivial change.

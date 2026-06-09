@@ -1,5 +1,9 @@
 # React Scheduler Component
 
+## Documentation Compliance Notice
+
+This document is governed by `docs/DOCUMENTATION_COMPLIANCE.md`. Any implementation, change, deployment, or completion claim touching this document must record the mandatory Documentation Compliance Checkpoint with `Decision: PASS`.
+
 This component was forked from the following [project](https://github.com/aldabil21/react-scheduler) and was updated to fix bugs and meet specific needs.
 
 > :warning: **Notice**: This component uses `mui`/`emotion`/`date-fns`. if your project is not already using these libs, this component may not be suitable.

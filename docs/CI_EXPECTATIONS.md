@@ -1,5 +1,9 @@
 # EstateOS CI/CD Pipeline Expectations
 
+## Documentation Compliance Notice
+
+This document is governed by `docs/DOCUMENTATION_COMPLIANCE.md`. Any implementation, change, deployment, or completion claim touching this document must record the mandatory Documentation Compliance Checkpoint with `Decision: PASS`.
+
 ## Required Checks
 
 Every PR or push to `main` must pass:
@@ -13,6 +17,8 @@ Every PR or push to `main` must pass:
 - admin build: vite build succeeds
 - root lint: eslint passes
 - forbidden pattern check: no forbidden labels in source
+- documentation compliance check: every .md has compliance notice and governance docs have hard gate
+- backend compliance tests: estateosCompliance passes
 ```
 
 ## Workflow Files
@@ -39,6 +45,17 @@ To integrate into GitHub Actions, add a step in `build.yml`:
 ```
 
 Note: Requires a running MongoDB instance. The test workflow already has MongoDB.
+
+## Documentation Compliance Check
+
+Add to CI pipeline after the forbidden pattern check step:
+
+```yaml
+- name: Documentation compliance check
+  run: node scripts/checkDocCompliance.js
+```
+
+This script verifies every `.md` file has a `Documentation Compliance Notice` and all governance docs include the mandatory compliance gate section. Fails with exit code 1 if compliance is incomplete.
 
 ## Forbidden Pattern Check
 

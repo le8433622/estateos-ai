@@ -1,5 +1,9 @@
 # EstateOS Known Warnings
 
+## Documentation Compliance Notice
+
+This document is governed by `docs/DOCUMENTATION_COMPLIANCE.md`. Any implementation, change, deployment, or completion claim touching this document must record the mandatory Documentation Compliance Checkpoint with `Decision: PASS`.
+
 ## Non-Blocking Warnings
 
 ### 1. useEffect dependency warning in admin `App.tsx`

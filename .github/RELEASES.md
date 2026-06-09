@@ -1,5 +1,9 @@
 # Releases
 
+## Documentation Compliance Notice
+
+This document is governed by `docs/DOCUMENTATION_COMPLIANCE.md`. Any implementation, change, deployment, or completion claim touching this document must record the mandatory Documentation Compliance Checkpoint with `Decision: PASS`.
+
 ## [Movin' In 7.0](https://github.com/aelassas/movinin/releases/tag/v7.0) – 2026-03-18
 
 * fix(backend): optimize mailer with transporter pooling

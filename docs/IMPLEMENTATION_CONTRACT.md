@@ -1,8 +1,26 @@
 # EstateOS Network Implementation Contract
 
+## Documentation Compliance Notice
+
+This document is governed by `docs/DOCUMENTATION_COMPLIANCE.md`. Any implementation, change, deployment, or completion claim touching this document must record the mandatory Documentation Compliance Checkpoint with `Decision: PASS`.
+
 ## Purpose
 
 This document is the master implementation contract for EstateOS Network. It binds product doctrine, data models, permissions, audit, API behavior, AI limits, revenue rights, and anti-bypass rules into one source of truth.
+
+## Mandatory Documentation Compliance
+
+Every implementation must pass `docs/DOCUMENTATION_COMPLIANCE.md`. This contract cannot be implemented partially or by intent only.
+
+Rules:
+
+- Required source documents must be reviewed before non-trivial changes: `RULER.md`, `CHECKPOINT.md`, `AGENT.md`, `AGENTS.md`, `docs/IMPLEMENTATION_CONTRACT.md`, and `docs/DOCUMENTATION_COMPLIANCE.md`.
+- Every affected domain document must be reviewed before changing related code, docs, configuration, data models, UI, API behavior, AI behavior, or operations.
+- Each applicable rule must be marked `PASS`, `N/A`, or `STOP`.
+- `N/A` requires a short reason.
+- `STOP` blocks implementation, commit, deployment, and completion.
+- If this document conflicts with another EstateOS document, the stricter safety, privacy, permission, audit, anti-bypass, or legal-risk rule wins.
+- Tests/build passing does not override missing documentation compliance.
 
 ## Why It Exists
 
@@ -350,8 +368,11 @@ Required controls:
 
 Every implementation must pass `CHECKPOINT.md`.
 
+Every implementation must also pass `docs/DOCUMENTATION_COMPLIANCE.md`.
+
 Minimum merge requirements:
 
+- Documentation compliance passed.
 - Product alignment passed.
 - Permission checks passed.
 - Audit logs added.
@@ -371,3 +392,4 @@ Minimum merge requirements:
 - [x] The docs define EstateOS as a large operating network.
 - [x] The docs protect against bypass, bribery, source theft, scraping, and legal overclaiming.
 - [x] OpenCode/Codex can implement from these docs without needing new business clarification.
+- [x] The contract requires 100% documentation compliance before implementation, commit, deploy, and completion.

@@ -1,5 +1,9 @@
 # EstateOS Pilot QA Checklist
 
+## Documentation Compliance Notice
+
+This document is governed by `docs/DOCUMENTATION_COMPLIANCE.md`. Any implementation, change, deployment, or completion claim touching this document must record the mandatory Documentation Compliance Checkpoint with `Decision: PASS`.
+
 > **URLs (internal pilot):** Backend `https://estateos-backend-api.onrender.com`, Frontend `https://estateos-frontend.onrender.com`, Admin `https://estateos-admin.onrender.com`. Custom domains (`estateos.vn`) are optional for internal pilot — required only before public partner launch.
 
 ## Supply Flow

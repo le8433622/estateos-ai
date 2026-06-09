@@ -1,5 +1,9 @@
 # Code of Conduct for Movin' In
 
+## Documentation Compliance Notice
+
+This document is governed by `docs/DOCUMENTATION_COMPLIANCE.md`. Any implementation, change, deployment, or completion claim touching this document must record the mandatory Documentation Compliance Checkpoint with `Decision: PASS`.
+
 ## Our Commitment
 
 We are committed to fostering an open, welcoming, and harassment-free community around Movin' In. All participants are expected to treat each other with respect and kindness, regardless of background.

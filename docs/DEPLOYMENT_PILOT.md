@@ -1,5 +1,9 @@
 # EstateOS Pilot Deployment Guide
 
+## Documentation Compliance Notice
+
+This document is governed by `docs/DOCUMENTATION_COMPLIANCE.md`. Any implementation, change, deployment, or completion claim touching this document must record the mandatory Documentation Compliance Checkpoint with `Decision: PASS`.
+
 ## Environment Variables
 
 Required variables (see `backend/src/config/env.config.ts` for full list):

@@ -1,5 +1,9 @@
 # EstateOS Security Launch Checklist
 
+## Documentation Compliance Notice
+
+This document is governed by `docs/DOCUMENTATION_COMPLIANCE.md`. Any implementation, change, deployment, or completion claim touching this document must record the mandatory Documentation Compliance Checkpoint with `Decision: PASS`.
+
 ## Default Secrets
 
 - [ ] `MI_JWT_SECRET` changed from `Movinin`

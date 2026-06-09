@@ -1,5 +1,9 @@
 # AGENT.md
 
+## Documentation Compliance Notice
+
+This document is governed by `docs/DOCUMENTATION_COMPLIANCE.md`. Any implementation, change, deployment, or completion claim touching this document must record the mandatory Documentation Compliance Checkpoint with `Decision: PASS`.
+
 ## Purpose
 
 This file is the operating manual for OpenCode, Codex, and any AI coding agent working in this repository.
@@ -7,6 +11,25 @@ This file is the operating manual for OpenCode, Codex, and any AI coding agent w
 EstateOS Network is a Real Estate Operating Network, not a generic property listing site.
 
 The existing Movin' In codebase is only the technical shell. New implementation must move the product toward EstateOS Network.
+
+## Mandatory Documentation Compliance Gate
+
+Agents must treat `docs/DOCUMENTATION_COMPLIANCE.md` as a hard gate. Work is not complete unless all applicable repository documents are checked and the final decision is `PASS`.
+
+Before editing, agents must review:
+
+```txt
+RULER.md
+CHECKPOINT.md
+AGENT.md
+AGENTS.md
+docs/IMPLEMENTATION_CONTRACT.md
+docs/DOCUMENTATION_COMPLIANCE.md
+```
+
+Agents must also review every affected domain document. Examples include `docs/ACCOUNT_MODEL.md`, `docs/TRUST_MODEL.md`, `docs/API_MARKETPLACE.md`, `docs/AI_AGENT_OS.md`, `docs/DEAL_ROOM_OS.md`, `docs/REVENUE_RIGHTS.md`, `docs/ANTI_BYPASS_RULES.md`, `docs/SECURITY_LAUNCH_CHECKLIST.md`, `docs/CI_EXPECTATIONS.md`, and pilot/deployment runbooks when launch behavior is affected.
+
+Every checkpoint item must be marked `PASS`, `N/A`, or `STOP`. `N/A` requires a reason. `STOP` blocks implementation, commit, deploy, and completion. Passing tests without documentation compliance is not sufficient.
 
 ## Mission
 
@@ -285,6 +308,8 @@ Before merging any implementation, verify:
 - Data contribution and usage are recorded where relevant.
 - AI outputs are bounded, logged, and non-final.
 - API calls are scoped, rate-limited, and usage-logged.
+- The Documentation Compliance Checkpoint is recorded exactly as required by `docs/DOCUMENTATION_COMPLIANCE.md`.
+- No relevant rule from the required source documents is unchecked or silently skipped.
 
 ## Acceptance Criteria
 

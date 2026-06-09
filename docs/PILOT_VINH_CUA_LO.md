@@ -1,5 +1,9 @@
 # EstateOS Pilot — Vinh / Cửa Lò / Nghệ An
 
+## Documentation Compliance Notice
+
+This document is governed by `docs/DOCUMENTATION_COMPLIANCE.md`. Any implementation, change, deployment, or completion claim touching this document must record the mandatory Documentation Compliance Checkpoint with `Decision: PASS`.
+
 ## Pilot Scope
 
 - **Area:** Vinh, Cửa Lò, Ngệ An

@@ -1,5 +1,9 @@
 # Contribution Guide
 
+## Documentation Compliance Notice
+
+This document is governed by `docs/DOCUMENTATION_COMPLIANCE.md`. Any implementation, change, deployment, or completion claim touching this document must record the mandatory Documentation Compliance Checkpoint with `Decision: PASS`.
+
 Welcome to the **Movin' In** Contribution Guide!  
 
 We appreciate your interest in contributing to Movin' In. This guide will help you get started, follow best practices, and make your contributions smooth and effective.
@@ -105,7 +109,8 @@ We appreciate your interest in contributing to Movin' In. This guide will help y
 - Open a **Pull Request** (PR) against the Movin' In `main` branch.  
 - Provide a clear description of the changes and link any related issues.  
 - Include screenshots or logs if your change affects UI or fixes bugs.  
-- Ensure all tests pass and pre-commit checks are green before requesting review.
+- Ensure all tests pass and pre-commit checks are green before requesting review.  
+- **Documentation Compliance Checkpoint** must be recorded with `Decision: PASS` before any implementation, commit, deploy, or completion claim. See `docs/DOCUMENTATION_COMPLIANCE.md` for the required checklist format.
 
 ## Testing
 
@@ -120,9 +125,10 @@ See the [Testing Wiki](https://github.com/aelassas/movinin/wiki/Testing) for mor
 
 ## Pre-commit Checks
 
-- Movin' In uses **Husky** to run pre-commit hooks: linting, type checking, and file size checks.  
+- EstateOS uses **Husky** to run pre-commit hooks: linting, type checking, file size checks, forbidden-label checks, and documentation compliance checks.  
 - These hooks run automatically when you commit code, helping maintain quality.  
-- If any pre-commit check fails, fix the reported issues before proceeding.
+- If any pre-commit check fails, fix the reported issues before proceeding.  
+- Documentation compliance and forbidden patterns are hard gates — the commit will be blocked if they fail.
 
 ## Reporting Issues
 

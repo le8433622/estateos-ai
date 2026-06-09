@@ -452,6 +452,19 @@ const main = async () => {
       process.exit(1)
     }
 
+    // Run documentation compliance check
+    try {
+      const { stdout, stderr } = await execAsync('node scripts/checkDocCompliance.js', { timeout: 120000 })
+      if (stdout) { process.stdout.write(stdout) }
+      if (stderr) { process.stderr.write(stderr) }
+      logger.log(`${chalk.green('Documentation compliance check passed.')}`)
+    } catch (err) {
+      if (err.stdout) { process.stdout.write(err.stdout) }
+      if (err.stderr) { process.stderr.write(err.stderr) }
+      logger.logError('Documentation compliance check failed.')
+      process.exit(1)
+    }
+
     // Wait for all tasks to complete, and if any fails, it will throw an error
     await Promise.all(tasks)
 

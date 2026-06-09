@@ -1,5 +1,9 @@
 # EstateOS Network Super Task Plan
 
+## Documentation Compliance Notice
+
+This document is governed by `docs/DOCUMENTATION_COMPLIANCE.md`. Any implementation, change, deployment, or completion claim touching this document must record the mandatory Documentation Compliance Checkpoint with `Decision: PASS`.
+
 ## Purpose
 
 This is the master task plan for OpenCode, Codex, and implementation agents. It defines a coherent platform-kernel plan for EstateOS Network.
