@@ -181,6 +181,7 @@ export const API_SCOPES = [
 export type ApiScopeName = typeof API_SCOPES[number]
 
 export const API_KEY_STATUSES = ['active', 'revoked'] as const
+export const API_KEY_ALGOS = ['sha256', 'bcrypt'] as const
 export const LEDGER_CONTRIBUTION_TYPES = [
   'created_property',
   'uploaded_evidence',

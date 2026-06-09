@@ -1,4 +1,5 @@
 import crypto from 'node:crypto'
+import bcrypt from 'bcrypt'
 import { Request } from 'express'
 import ApiKey, { ApiKeyDocument } from '../models/ApiKey'
 import { API_SCOPES, ApiScopeName } from '../estateos/constants'
@@ -9,7 +10,21 @@ export interface AuthenticatedApiKey {
   scopes: ApiScopeName[]
 }
 
-export const hashApiKey = (secret: string) => crypto.createHash('sha256').update(secret).digest('hex')
+const BCRYPT_ROUNDS = 10
+
+export const hashApiKey = (secret: string, algo: 'sha256' | 'bcrypt' = 'sha256') => {
+  if (algo === 'bcrypt') {
+    return bcrypt.hashSync(secret, BCRYPT_ROUNDS)
+  }
+  return crypto.createHash('sha256').update(secret).digest('hex')
+}
+
+export const verifyApiKey = (secret: string, storedHash: string, algo: 'sha256' | 'bcrypt') => {
+  if (algo === 'bcrypt') {
+    return bcrypt.compareSync(secret, storedHash)
+  }
+  return crypto.createHash('sha256').update(secret).digest('hex') === storedHash
+}
 
 export const generateApiKeySecret = () => `eos_${crypto.randomBytes(32).toString('hex')}`
 
@@ -34,8 +49,9 @@ export const createApiKeyForAccount = async (input: {
   const apiKey = await ApiKey.create({
     account_id: input.accountId,
     name: input.name || 'EstateOS API key',
-    key_hash: hashApiKey(secret),
+    key_hash: hashApiKey(secret, 'bcrypt'),
     key_prefix: secret.slice(0, 12),
+    hash_algo: 'bcrypt',
     scopes: sanitizeApiScopes(input.scopes),
     created_by: input.createdBy,
   })
@@ -64,10 +80,24 @@ export const authenticateApiKey = async (secret: string): Promise<AuthenticatedA
     return null
   }
 
-  const apiKey = await ApiKey.findOne({ key_hash: hashApiKey(secret), status: 'active' })
+  const prefix = secret.slice(0, 12)
+  const apiKey = await ApiKey.findOne({ key_prefix: prefix, status: 'active' }).select('+key_hash')
 
   if (!apiKey) {
     return null
+  }
+
+  const algo = apiKey.hash_algo || 'sha256'
+  const match = verifyApiKey(secret, apiKey.key_hash, algo)
+
+  if (!match) {
+    return null
+  }
+
+  // Upgrade-on-use: re-hash with bcrypt if still using SHA-256
+  if (algo === 'sha256') {
+    apiKey.key_hash = hashApiKey(secret, 'bcrypt')
+    apiKey.hash_algo = 'bcrypt'
   }
 
   apiKey.last_used_at = new Date()

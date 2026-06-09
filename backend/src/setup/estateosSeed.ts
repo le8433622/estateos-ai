@@ -39,6 +39,7 @@ import DemandProfile from '../models/DemandProfile'
 import { ACCOUNT_PROFILE_TYPES, API_SCOPES, DEFAULT_API_PLANS, VERIFICATION_PACKAGE_PLANS, AccountProfileType } from '../estateos/constants'
 import { createApiKeyForAccount } from '../services/apiKeyService'
 import { refreshPropertyTrustState } from '../services/trustStateService'
+import { computePropertyQuality } from '../services/qualityService'
 import BillingPlan from '../models/BillingPlan'
 
 const SEED_TAG = 'estateos-kernel-00'
@@ -488,6 +489,10 @@ export const seedEstateOSKernel = async () => {
 
   for (const property of properties) {
     await refreshPropertyTrustState(property._id.toString())
+  }
+
+  for (const property of properties) {
+    await computePropertyQuality(property._id.toString())
   }
 
   logger.info('EstateOS kernel seed completed')

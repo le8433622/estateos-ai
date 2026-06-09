@@ -46,13 +46,13 @@ const buildProductQuery = (product: DataProductDefinition, scopes: string[]) => 
   }
 
   const qf = product.quality_filters || {}
-  if (qf.min_quality_score) {
+  if (qf.min_quality_score !== undefined) {
     query.quality_score = { $gte: qf.min_quality_score }
   }
   if (qf.verified_location === true) {
     query['trust_state.location_status'] = 'verified_location'
   }
-  if (qf.freshness_min) {
+  if (qf.freshness_min !== undefined) {
     query.freshness_score = { $gte: qf.freshness_min }
   }
   if (qf.exclude_duplicate_risk === true) {

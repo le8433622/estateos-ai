@@ -1,11 +1,12 @@
 import { Schema, model, Types, Document } from 'mongoose'
-import { API_KEY_ENVIRONMENTS, API_KEY_STATUSES, API_SCOPES, ApiScopeName } from '../estateos/constants'
+import { API_KEY_ALGOS, API_KEY_ENVIRONMENTS, API_KEY_STATUSES, API_SCOPES, ApiScopeName } from '../estateos/constants'
 
 export interface ApiKeyDocument extends Document {
   account_id: Types.ObjectId
   name: string
   key_hash: string
   key_prefix: string
+  hash_algo: 'sha256' | 'bcrypt'
   scopes: ApiScopeName[]
   status: 'active' | 'revoked'
   environment: 'sandbox' | 'production'
@@ -34,13 +35,17 @@ const apiKeySchema = new Schema<ApiKeyDocument>(
     key_hash: {
       type: String,
       required: [true, "can't be blank"],
-      unique: true,
       select: false,
     },
     key_prefix: {
       type: String,
       required: [true, "can't be blank"],
       index: true,
+    },
+    hash_algo: {
+      type: String,
+      enum: API_KEY_ALGOS,
+      default: 'sha256',
     },
     scopes: {
       type: [String],
