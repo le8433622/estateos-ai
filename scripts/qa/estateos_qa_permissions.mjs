@@ -77,7 +77,8 @@ async function authFetch(ctx, email, path, options = {}) {
     const { status, body } = await loginViaAPI(page, t.email, 'ADMIN');
     const pass = status === t.expect;
     const msg = pass ? '' : `got ${status} (wanted ${t.expect})${body?.permissions ? ' perms:' + body.permissions : ''}`;
-    check(`Admin login: ${t.label} → ${t.expect === 200 ? 'allow' : 'deny'}`, pass, msg);
+    const adminAccess = t.expect === 200 ? 'allow' : 'deny';
+    check(`Admin login: ${t.label} → ${adminAccess}`, pass, msg);
     if (pass && status === 200) {
       check(`  ${t.label} sees admin:moderate`, body.permissions?.includes('admin:moderate'), `got: ${body.permissions}`);
     }
@@ -102,7 +103,8 @@ async function authFetch(ctx, email, path, options = {}) {
     const { status, body } = await loginViaAPI(page, t.email, 'FRONTEND');
     const pass = status === t.expect;
     const msg = pass ? '' : `got ${status} (wanted ${t.expect})`;
-    check(`Frontend login: ${t.label} → allow`, pass, msg);
+    const frontendAccess = t.expect === 200 ? 'allow' : 'deny';
+    check(`Frontend login: ${t.label} → ${frontendAccess}`, pass, msg);
     if (pass && status === 200) {
       check(`  ${t.label} has permissions in response`, Array.isArray(body.permissions), typeof body.permissions);
       check(`  ${t.label} has account_profiles in response`, Array.isArray(body.account_profiles), typeof body.account_profiles);
