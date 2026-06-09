@@ -45,6 +45,7 @@ const propertyEvidenceSchema = new Schema<PropertyEvidenceDocument>(
     file_ref: {
       type: String,
       trim: true,
+      select: false,
     },
     visibility: {
       type: String,
@@ -74,6 +75,7 @@ const propertyEvidenceSchema = new Schema<PropertyEvidenceDocument>(
     metadata: {
       type: Schema.Types.Mixed,
       default: {},
+      select: false,
     },
   },
   {

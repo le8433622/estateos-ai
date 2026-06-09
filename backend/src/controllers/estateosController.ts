@@ -1006,7 +1006,7 @@ export const opsPropertyClaims = async (req: Request, res: Response) => {
 
 export const opsPropertyEvidence = async (req: Request, res: Response) => {
   try {
-    const rows = await PropertyEvidence.find().sort({ updatedAt: -1 }).limit(getOpsLimit(req)).lean()
+    const rows = await PropertyEvidence.find().select('+file_ref +metadata').sort({ updatedAt: -1 }).limit(getOpsLimit(req)).lean()
     await auditOpsRead(req, 'PropertyEvidence', rows.length)
     res.json({ rows: rows.map(redactEvidenceForOps), rowCount: rows.length })
   } catch (err) {

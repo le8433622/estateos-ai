@@ -8,6 +8,7 @@ import i18n from './lang/i18n'
 import * as env from './config/env.config'
 import cors from './middlewares/cors'
 import allowedMethods from './middlewares/allowedMethods'
+import { rateLimit } from './middlewares/rateLimit'
 import agencyRoutes from './routes/agencyRoutes'
 import bookingRoutes from './routes/bookingRoutes'
 import locationRoutes from './routes/locationRoutes'
@@ -50,6 +51,7 @@ app.use(cors())
 // app.options('*', cors())
 app.use(cookieParser(env.COOKIE_SECRET))
 app.use(allowedMethods)
+app.use(rateLimit())
 
 // Root health endpoint
 app.get('/health', (_req, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }))
