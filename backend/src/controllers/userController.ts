@@ -541,7 +541,7 @@ export const signin = async (req: Request, res: Response) => {
       || !user
       || !user.password
       || ![movininTypes.AppType.Frontend, movininTypes.AppType.Admin].includes(type)
-      || (type === movininTypes.AppType.Admin && user.type === movininTypes.UserType.User)
+      || (type === movininTypes.AppType.Admin && user.type !== movininTypes.UserType.Admin)
     ) {
       res.sendStatus(204)
       return
