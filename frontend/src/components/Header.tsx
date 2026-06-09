@@ -27,9 +27,6 @@ import {
   DescriptionTwoTone as TosIcon,
   ExitToApp as SignoutIcon,
   Login as LoginIcon,
-  EventSeat as BookingsIcon,
-  Business as AgencyIcon,
-  LocationOn as LocationIcon,
   PersonOutline as SignUpIcon,
   PrivacyTip as PrivacyIcon,
   Cookie as CookiePolicyIcon,
@@ -363,35 +360,6 @@ const Header = ({
                   >
                     <ListItemIcon><HomeIcon /></ListItemIcon>
                     <ListItemText primary={strings.HOME} />
-                  </ListItem>
-                  {isSignedIn && (
-                    <ListItem
-                      onClick={() => {
-                        navigate('/bookings')
-                        handleSideMenuClose()
-                      }}
-                    >
-                      <ListItemIcon><BookingsIcon /></ListItemIcon>
-                      <ListItemText primary={strings.BOOKINGS} />
-                    </ListItem>
-                  )}
-                  <ListItem
-                    onClick={() => {
-                      navigate('/agencies')
-                      handleSideMenuClose()
-                    }}
-                  >
-                    <ListItemIcon><AgencyIcon /></ListItemIcon>
-                    <ListItemText primary={strings.AGENCIES} />
-                  </ListItem>
-                  <ListItem
-                    onClick={() => {
-                      navigate('/destinations')
-                      handleSideMenuClose()
-                    }}
-                  >
-                    <ListItemIcon><LocationIcon /></ListItemIcon>
-                    <ListItemText primary={strings.LOCATIONS} />
                   </ListItem>
                   <ListItem
                     onClick={() => {

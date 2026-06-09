@@ -24,15 +24,9 @@ import {
   Settings as SettingsIcon,
   Dashboard as DashboardIcon,
   AccountTree as EstateOSIcon,
-  CorporateFare as AgenciesIcon,
-  LocationOn as LocationsIcon,
-  Home as PropertiesIcon,
-  People as UsersIcon,
   InfoTwoTone as AboutIcon,
   DescriptionTwoTone as TosIcon,
   ExitToApp as SignoutIcon,
-  Flag as CountriesIcon,
-  CalendarMonth as SchedulerIcon,
   Receipt as BillingIcon,
   FactCheck as QualityIcon,
   Hub as DistributionIcon,
@@ -299,15 +293,6 @@ const Header = ({
                 </ListItem>
                 <ListItem
                   onClick={() => {
-                    navigate('/scheduler')
-                    handleSideMenuClose()
-                  }}
-                >
-                  <ListItemIcon><SchedulerIcon /></ListItemIcon>
-                  <ListItemText primary={strings.SCHEDULER} />
-                </ListItem>
-                <ListItem
-                  onClick={() => {
                     navigate('/estateos')
                     handleSideMenuClose()
                   }}
@@ -377,51 +362,6 @@ const Header = ({
                 >
                   <ListItemIcon><LaunchIcon /></ListItemIcon>
                   <ListItemText primary="Launch" />
-                </ListItem>
-                <ListItem
-                  onClick={() => {
-                    navigate('/agencies')
-                    handleSideMenuClose()
-                  }}
-                >
-                  <ListItemIcon><AgenciesIcon /></ListItemIcon>
-                  <ListItemText primary={strings.AGENCIES} />
-                </ListItem>
-                <ListItem
-                  onClick={() => {
-                    navigate('/countries')
-                    handleSideMenuClose()
-                  }}
-                >
-                  <ListItemIcon><CountriesIcon /></ListItemIcon>
-                  <ListItemText primary={strings.COUNTRIES} />
-                </ListItem>
-                <ListItem
-                  onClick={() => {
-                    navigate('/locations')
-                    handleSideMenuClose()
-                  }}
-                >
-                  <ListItemIcon><LocationsIcon /></ListItemIcon>
-                  <ListItemText primary={strings.LOCATIONS} />
-                </ListItem>
-                <ListItem
-                  onClick={() => {
-                    navigate('/properties')
-                    handleSideMenuClose()
-                  }}
-                >
-                  <ListItemIcon><PropertiesIcon /></ListItemIcon>
-                  <ListItemText primary={strings.PROPERTIES} />
-                </ListItem>
-                <ListItem
-                  onClick={() => {
-                    navigate('/users')
-                    handleSideMenuClose()
-                  }}
-                >
-                  <ListItemIcon><UsersIcon /></ListItemIcon>
-                  <ListItemText primary={strings.USERS} />
                 </ListItem>
                 <ListItem
                   onClick={() => {
