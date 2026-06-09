@@ -37,8 +37,9 @@ This document is governed by `docs/DOCUMENTATION_COMPLIANCE.md`. Any implementat
 
 ## Admin Endpoints
 
-- [ ] All ops/admin endpoints require `authJwt.verifyToken` + `authJwt.authAdmin`
-- [ ] UI hiding is not treated as authorization (server-side checks enforced)
+- [ ] All ops/admin endpoints require `authPermission('admin:moderate')` (server-side, not just UI hiding)
+- [ ] Legacy `authJwt.authAdmin` routes still work for Movin' In routes only
+- [ ] AI Agent and VerificationOperator cannot log into admin console
 - [ ] Admin sensitive views redact evidence and private data
 
 ## Partner / Sandbox Separation
@@ -87,5 +88,15 @@ This document is governed by `docs/DOCUMENTATION_COMPLIANCE.md`. Any implementat
 - [ ] MongoDB uses auth and SSL in production
 - [ ] `node_modules` is not committed
 - [ ] `.env` files are not committed
-- [ ] CI pipeline includes lint, build, and forbidden pattern check
+- [ ] CI pipeline includes lint, build, forbidden pattern check, documentation compliance check, and backend compliance tests
+- [ ] Pre-commit (`pre-commit.js`) runs all checks locally before allowing commit
+- [ ] Documentation compliance gate must be recorded with `Decision: PASS` before any completion claim
+- [ ] Production seed endpoint locked (returns 400 if already seeded)
 - [ ] Database backups configured (see `docs/BACKUP_ROLLBACK.md`)
+
+## Input Validation
+
+- [ ] Supply property creation rejects empty body (requires title + property_type)
+- [ ] API key creation rejects empty body (requires name + scopes)
+- [ ] AiAgentAccount blocked from web login (both admin and frontend)
+- [ ] Seed endpoint cannot be re-run after first successful seed

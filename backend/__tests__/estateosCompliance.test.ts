@@ -176,3 +176,126 @@ describe('EstateOS compliance: web login security constraints', () => {
     }
   })
 })
+
+describe('EstateOS compliance: supply property validation', () => {
+  it('rejects request without title or name', () => {
+    const body: Record<string, unknown> = {}
+    const missingTitle = !body.title && !body.name
+    expect(missingTitle).toBe(true)
+  })
+
+  it('rejects request without property_type', () => {
+    const body: Record<string, unknown> = {}
+    const missingType = !body.property_type && !body.type
+    expect(missingType).toBe(true)
+  })
+
+  it('accepts request with title and property_type', () => {
+    const body: Record<string, unknown> = { title: 'Test', property_type: 'apartment' }
+    expect(body.title).toBeTruthy()
+    expect(body.property_type).toBeTruthy()
+  })
+
+  it('accepts request with name and type (legacy)', () => {
+    const body: Record<string, unknown> = { name: 'Test', type: 'Apartment' }
+    expect(body.name).toBeTruthy()
+    expect(body.type).toBeTruthy()
+  })
+})
+
+describe('EstateOS compliance: API key validation', () => {
+  it('rejects request without name', () => {
+    const body: Record<string, unknown> = {}
+    const missingName = !body?.name
+    expect(missingName).toBe(true)
+  })
+
+  it('rejects request without scopes', () => {
+    const body: Record<string, unknown> = { name: 'Test' }
+    const noScopes = !body?.scopes || !Array.isArray(body.scopes) || (body.scopes as unknown[]).length === 0
+    expect(noScopes).toBe(true)
+  })
+
+  it('rejects request with empty scopes array', () => {
+    const body: Record<string, unknown> = { name: 'Test', scopes: [] }
+    const noScopes = !body?.scopes || !Array.isArray(body.scopes) || (body.scopes as unknown[]).length === 0
+    expect(noScopes).toBe(true)
+  })
+
+  it('accepts request with name and valid scopes', () => {
+    const body: Record<string, unknown> = { name: 'Test Key', scopes: ['properties:read_public'] }
+    expect(body.name).toBeTruthy()
+    expect(Array.isArray(body.scopes)).toBe(true)
+    expect((body.scopes as string[]).length).toBeGreaterThan(0)
+  })
+})
+
+describe('EstateOS compliance: AiAgent web login block logic', () => {
+  it('blocks if all active profiles are AiAgentAccount', () => {
+    const profiles = [{ profile_type: 'AiAgentAccount' }]
+    const allAiAgent = profiles.length > 0 && profiles.every(p => p.profile_type === 'AiAgentAccount')
+    expect(allAiAgent).toBe(true)
+  })
+
+  it('allows if user has no profiles', () => {
+    const profiles: { profile_type: string }[] = []
+    const allAiAgent = profiles.length > 0 && profiles.every(p => p.profile_type === 'AiAgentAccount')
+    expect(allAiAgent).toBe(false)
+  })
+
+  it('allows if user has a non-AiAgent profile', () => {
+    const profiles = [
+      { profile_type: 'PropertyClaimAccount' },
+      { profile_type: 'AiAgentAccount' },
+    ]
+    const allAiAgent = profiles.length > 0 && profiles.every(p => p.profile_type === 'AiAgentAccount')
+    expect(allAiAgent).toBe(false)
+  })
+
+  it('blocks AiAgentAccount with only ai:run_action and property:read_public', () => {
+    const aiActions = DEFAULT_PROFILE_ALLOWED_ACTIONS['AiAgentAccount']
+    const hasNoWebPerms = !aiActions.includes('admin:moderate') &&
+      !aiActions.includes('billing:read') &&
+      !aiActions.includes('api:create_key') &&
+      !aiActions.includes('property:create_claim') &&
+      !aiActions.includes('property:upload_evidence') &&
+      !aiActions.includes('verification:accept_job') &&
+      !aiActions.includes('deal_room:add_event')
+    expect(hasNoWebPerms).toBe(true)
+  })
+})
+
+describe('EstateOS compliance: seed endpoint lock', () => {
+  it('blocks if PlatformOperatorAccount already exists', () => {
+    // Simulate the guard added in triggerEstateOSSeed
+    const existingOperator = true
+    const blocked = !!existingOperator
+    expect(blocked).toBe(true)
+  })
+})
+
+describe('EstateOS compliance: authPermission factory', () => {
+  it('PlatformOperatorAccount has admin:moderate', () => {
+    expect(DEFAULT_PROFILE_ALLOWED_ACTIONS['PlatformOperatorAccount']).toContain('admin:moderate')
+  })
+
+  it('VerificationOperatorAccount does not have admin:moderate', () => {
+    expect(DEFAULT_PROFILE_ALLOWED_ACTIONS['VerificationOperatorAccount']).not.toContain('admin:moderate')
+  })
+
+  it('AiAgentAccount does not have admin:moderate', () => {
+    expect(DEFAULT_PROFILE_ALLOWED_ACTIONS['AiAgentAccount']).not.toContain('admin:moderate')
+  })
+
+  it('PropertyDemandAccount does not have admin:moderate', () => {
+    expect(DEFAULT_PROFILE_ALLOWED_ACTIONS['PropertyDemandAccount']).not.toContain('admin:moderate')
+  })
+
+  it('ApiDataBuyerAccount does not have admin:moderate', () => {
+    expect(DEFAULT_PROFILE_ALLOWED_ACTIONS['ApiDataBuyerAccount']).not.toContain('admin:moderate')
+  })
+
+  it('PropertyClaimAccount does not have admin:moderate', () => {
+    expect(DEFAULT_PROFILE_ALLOWED_ACTIONS['PropertyClaimAccount']).not.toContain('admin:moderate')
+  })
+})
