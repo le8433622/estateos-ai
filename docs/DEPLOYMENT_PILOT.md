@@ -54,14 +54,14 @@ The seed creates:
 
 ## Default Credentials (dev only)
 
-| Email | Password | Role |
-|---|---|---|
-| operator@estateos.test | EstateOS123 | Platform Operator |
-| claim-source-1@estateos.test | EstateOS123 | Property Claim Source |
-| verifier-1@estateos.test | EstateOS123 | Verification Operator |
-| api-buyer-1@estateos.test | EstateOS123 | API Data Buyer |
-| demand-1@estateos.test | EstateOS123 | Demand User |
-| ai-agent@estateos.test | EstateOS123 | AI Agent |
+| Email | Password | Role | App | Permissions |
+|---|---|---|---|---|
+| operator@estateos.test | EstateOS123 | Platform Operator | **Admin** | `admin:moderate`, `billing:read`, `property:*`, `verification:*`, `api:*` |
+| claim-source-1@estateos.test | EstateOS123 | Property Claim Source | Frontend | `property:create_claim`, `property:update_own`, `property:upload_evidence`, `deal_room:*` |
+| verifier-1@estateos.test | EstateOS123 | Verification Operator | Frontend | `verification:accept_job`, `verification:submit_report` |
+| api-buyer-1@estateos.test | EstateOS123 | API Data Buyer | Frontend | `api:create_key`, `api:read_usage`, `property:read_partner`, `billing:read` |
+| demand-1@estateos.test | EstateOS123 | Demand User | Frontend | `deal_room:join`, `deal_room:add_event`, `property:read_public` |
+| ai-agent@estateos.test | EstateOS123 | AI Agent | System | `ai:run_action`, `property:read_public` |
 
 ## Security Warnings (Production)
 

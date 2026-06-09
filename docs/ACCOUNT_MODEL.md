@@ -578,6 +578,60 @@ organization created
 - Deal-room access must be participant-scoped.
 - AI access must be action-scoped.
 
+## App-to-Profile Mapping
+
+Each AccountProfile maps to a specific app for login and UI access:
+
+| Profile | App | Login Gate | Dashboard |
+|---|---|---|---|
+| `PlatformOperatorAccount` | Admin | `admin:moderate` | Command Center, Review, Billing, Quality, Distribution, Partners |
+| `VerificationOperatorAccount` | Frontend | `verification:accept_job` | Verifier dashboard |
+| `AiAgentAccount` | System-only | No web login | N/A (API/agent only) |
+| `PropertyClaimAccount` | Frontend | `property:create_claim` | Supply, Demand |
+| `PropertyDemandAccount` | Frontend | `deal_room:join` | Demand |
+| `ApiDataBuyerAccount` | Frontend | `api:create_key` | API Buyer, Partners |
+| `AgencyDeveloperAccount` | Frontend | `property:create_claim` + `api:create_key` | Supply, API Buyer, Partners |
+
+Admin login gates:
+- Only users with at least one active AccountProfile containing `admin:moderate` permission can log into the Admin app.
+- The legacy `UserType.Admin` check is no longer used for EstateOS route authorization.
+
+Frontend login gates:
+- All users with valid credentials can log into the Frontend app (no profile check at login).
+- Menu items and feature access are filtered client-side by `allowed_actions` and enforced server-side by `authPermission()` middleware.
+
+## Permission Enforcement
+
+Authorization uses a layered approach:
+
+1. **Route-level middleware**: `authPermission(permission, profileTypes?)` in `backend/src/middlewares/authPermission.ts`
+   - Calls `requireAccountProfile()` from `accountProfileService.ts`
+   - Checks `AccountProfile.allowed_actions` array
+   - Attaches `req.accountProfile` for downstream controllers
+
+2. **Controller-level**: Some controllers call `requireAccountProfile()` directly for finer-grained checks
+
+3. **Public routes**: No middleware (health, readiness, billing plans, public properties, data product catalog)
+
+Permission-to-profile defaults (see `backend/src/estateos/constants.ts:DEFAULT_PROFILE_ALLOWED_ACTIONS`):
+
+| Permission | Profiles with default access |
+|---|---|
+| `property:create_claim` | PropertyClaimAccount, AgencyDeveloperAccount, PlatformOperatorAccount |
+| `property:upload_evidence` | PropertyClaimAccount, AgencyDeveloperAccount, PlatformOperatorAccount |
+| `property:read_public` | All profiles |
+| `property:read_partner` | ApiDataBuyerAccount, AgencyDeveloperAccount, PlatformOperatorAccount |
+| `property:read_sensitive_internal` | PlatformOperatorAccount |
+| `verification:accept_job` | VerificationOperatorAccount, PlatformOperatorAccount |
+| `verification:submit_report` | VerificationOperatorAccount, PlatformOperatorAccount |
+| `api:create_key` | ApiDataBuyerAccount, AgencyDeveloperAccount, PlatformOperatorAccount |
+| `api:read_usage` | ApiDataBuyerAccount, AgencyDeveloperAccount, PlatformOperatorAccount |
+| `deal_room:join` | PropertyClaimAccount, PropertyDemandAccount, PlatformOperatorAccount |
+| `deal_room:add_event` | PropertyClaimAccount, PropertyDemandAccount, PlatformOperatorAccount |
+| `billing:read` | ApiDataBuyerAccount, PlatformOperatorAccount |
+| `admin:moderate` | PlatformOperatorAccount |
+| `ai:run_action` | AiAgentAccount |
+
 ## Checkpoints
 
 - Is the actor known?
@@ -593,3 +647,6 @@ organization created
 - [x] It explains login as economic identity.
 - [x] It defines permissions and forbidden actions.
 - [x] It ties account levels to trust, data access, and rights.
+- [x] It defines app-to-profile login mapping.
+- [x] It documents permission enforcement (authPermission middleware + requireAccountProfile service).
+- [x] It documents permission-to-profile default assignments.
