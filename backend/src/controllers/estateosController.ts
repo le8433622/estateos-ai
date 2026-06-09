@@ -1107,6 +1107,50 @@ export const opsAuditLogs = async (req: Request, res: Response) => {
   }
 }
 
+export const opsCleanupInfo = async (req: Request, res: Response) => {
+  try {
+    const qaPropertyCount = await Property.countDocuments({ name: /^QA Test / })
+    const qaApiKeyCount = await ApiKey.countDocuments({ name: /^QA Test / })
+    await auditOpsRead(req, 'OpsCleanup', 1)
+    res.json({ qaPropertyCount, qaApiKeyCount })
+  } catch (err) {
+    handleEstateOSError(res, err)
+  }
+}
+
+export const opsRunCleanup = async (req: Request, res: Response) => {
+  try {
+    const properties = await Property.find({ name: /^QA Test / }).select('_id name').lean()
+    const propertyIds = properties.map(p => p._id)
+    let deletedPropertyClaims = 0
+    let deletedProperties = 0
+    if (propertyIds.length > 0) {
+      const claimResult = await PropertyClaim.deleteMany({ property_id: { $in: propertyIds } })
+      deletedPropertyClaims = claimResult.deletedCount
+      const propResult = await Property.deleteMany({ _id: { $in: propertyIds } })
+      deletedProperties = propResult.deletedCount
+    }
+    const keyResult = await ApiKey.deleteMany({ name: /^QA Test / })
+    const deletedApiKeys = keyResult.deletedCount
+
+    const actor = toAuditActor(req)
+    await createAuditLog({
+      actor_type: 'user',
+      actor_id: actor.actor_id,
+      account_profile: actor.account_profile || 'PlatformOperatorAccount',
+      action: 'ops_console.cleanup',
+      target_type: 'QA Test Data',
+      scope: ['admin:moderate'],
+      after_summary: { deletedProperties, deletedPropertyClaims, deletedApiKeys },
+      metadata: { kernel: 'Audit Kernel' },
+    })
+
+    res.json({ deletedProperties, deletedPropertyClaims, deletedApiKeys })
+  } catch (err) {
+    handleEstateOSError(res, err)
+  }
+}
+
 export const listOwnProfiles = async (req: Request, res: Response) => {
   try {
     const userId = req.user?._id

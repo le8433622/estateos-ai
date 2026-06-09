@@ -24,6 +24,8 @@ routes.route('/api/v1/ops/api-usage').get(authJwt.verifyToken, authPermission('a
 routes.route('/api/v1/ops/contribution-ledger').get(authJwt.verifyToken, authPermission('admin:moderate'), estateosController.opsContributionLedger)
 routes.route('/api/v1/ops/data-usage-ledger').get(authJwt.verifyToken, authPermission('admin:moderate'), estateosController.opsDataUsageLedger)
 routes.route('/api/v1/ops/audit-logs').get(authJwt.verifyToken, authPermission('admin:moderate'), estateosController.opsAuditLogs)
+routes.route('/api/v1/ops/cleanup').get(authJwt.verifyToken, authPermission('admin:moderate'), estateosController.opsCleanupInfo)
+routes.route('/api/v1/ops/cleanup').post(authJwt.verifyToken, authPermission('admin:moderate'), estateosController.opsRunCleanup)
 
 // Public property routes
 routes.route('/api/v1/properties').get(estateosController.listProperties)

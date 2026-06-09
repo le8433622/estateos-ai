@@ -34,6 +34,7 @@ import {
   Rocket as PilotIcon,
   RocketLaunch as LaunchIcon,
   RateReview as ReviewIcon,
+  CleaningServices as CleanupIcon,
 } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 import * as movininTypes from ':movinin-types'
@@ -380,6 +381,17 @@ const Header = ({
                   >
                     <ListItemIcon><LaunchIcon /></ListItemIcon>
                     <ListItemText primary="Launch" />
+                  </ListItem>
+                )}
+                {permissions.includes('admin:moderate') && (
+                  <ListItem
+                    onClick={() => {
+                      navigate('/estateos/cleanup')
+                      handleSideMenuClose()
+                    }}
+                  >
+                    <ListItemIcon><CleanupIcon /></ListItemIcon>
+                    <ListItemText primary="Cleanup" />
                   </ListItem>
                 )}
                 <ListItem
