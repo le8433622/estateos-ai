@@ -4,15 +4,22 @@
  * Cleanup QA artifacts from the database.
  * Removes properties and API keys created by the QA permission matrix tests.
  *
- * Usage:
+ * Usage (from project root):
  *   MI_DB_URI="mongodb+srv://..." node scripts/qa/cleanup_qa_artifacts.mjs
  *
  * Or set MONGODB_URI or MI_DB_URI as environment variable.
  * For Render production, use Render Shell or a jumpbox with network access to Atlas.
  */
 
-import mongoose from 'mongoose'
+import { createRequire } from 'node:module'
+import path from 'node:path'
 import process from 'node:process'
+
+// Resolve mongoose from backend/node_modules relative to script location
+const scriptDir = path.dirname(new URL(import.meta.url).pathname)
+const backendNodeModules = path.resolve(scriptDir, '../../backend/node_modules')
+const require = createRequire(path.join(backendNodeModules, 'noop.js'))
+const mongoose = require('mongoose')
 
 const MONGODB_URI = process.env.MONGODB_URI || process.env.MI_DB_URI
 
