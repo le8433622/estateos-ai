@@ -150,7 +150,7 @@ export const signout = async (redirect = true) => {
     )
 
   if (redirect) {
-    window.location.href = '/sign-in'
+    window.location.href = '/#/sign-in'
   }
 }
 

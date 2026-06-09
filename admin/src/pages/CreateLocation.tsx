@@ -212,7 +212,7 @@ const CreateLocation = () => {
                     await LocationService.deleteTempImage(image)
                   }
                   // navigate('/locations')
-                  window.location.href = '/locations'
+                  window.location.href = '/#/locations'
                 }}
               >
                 {commonStrings.CANCEL}
