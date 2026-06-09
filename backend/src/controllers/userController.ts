@@ -1259,7 +1259,17 @@ export const getUser = async (req: Request, res: Response) => {
       return
     }
 
-    res.json(user)
+    const accountProfiles = await AccountProfile.find({
+      user_id: new mongoose.Types.ObjectId(id),
+      status: { $in: ['active', 'limited'] },
+    })
+    const permissions = [...new Set(accountProfiles.flatMap(p => p.allowed_actions || []))]
+
+    res.json({
+      ...user,
+      account_profiles: accountProfiles.map(p => p.profile_type),
+      permissions,
+    })
   } catch (err) {
     logger.error(`[user.getUser] ${i18n.t('ERROR')} ${id}`, err)
     res.status(400).send(i18n.t('ERROR') + err)
