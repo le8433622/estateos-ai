@@ -132,3 +132,22 @@ Before production, test rollback in staging:
 # 3. Restore from backup
 # 4. Verify demo data is gone and system is functional
 ```
+
+## Drill Log
+
+| Date | Action | Result | Verified By |
+|------|--------|--------|-------------|
+| 2026-06-09 | QA cleanup script (delete 1 QA property, 0 keys) | ✅ | Automation |
+
+## Render Rollback
+
+Render retains deploy history. To roll back:
+
+1. Go to https://dashboard.render.com/web/srv-d8i0bae47okc738ugcf0
+2. Click "Manual Deploy" → "Deploy existing commit" or "Rollback"
+3. Select the previous known-good deploy ID (e.g., `dep-d8k1thmk` from 2026-06-09T14:10)
+4. Confirm deploy
+
+Current live deploy: `dep-d8k2b3eq` (2026-06-09T14:39) — cleanup tools + role-based landing.
+
+Current production commit: `38da0d5`
