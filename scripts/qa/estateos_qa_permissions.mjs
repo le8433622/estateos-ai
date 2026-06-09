@@ -143,9 +143,9 @@ async function authFetch(ctx, email, path, options = {}) {
       user: 'api-buyer-1', expect: 400, body: {} },
     { label: 'API Keys: Create (with valid body)', method: 'POST', path: '/api/v1/api-keys',
       user: 'api-buyer-1', expect: 201,
-      body: { name: 'QA Test Key', scopes: ['property:read_public'] } },
+      body: { name: 'QA Test Key', scopes: ['properties:read_public'] } },
     { label: 'API Keys: Create (demand)', method: 'POST', path: '/api/v1/api-keys',
-      user: 'demand-1', expect: 403, body: { name: 'Test', scopes: ['property:read_public'] } },
+      user: 'demand-1', expect: 403, body: { name: 'Test', scopes: ['properties:read_public'] } },
     { label: 'Billing: Admin Overview', method: 'GET', path: '/api/v1/billing/admin/overview',
       user: 'operator', expect: 200 },
     { label: 'Billing: Admin Overview (api-buyer)', method: 'GET', path: '/api/v1/billing/admin/overview',
@@ -353,7 +353,40 @@ async function authFetch(ctx, email, path, options = {}) {
   // ===== RESULTS =====
   console.log(`\n========== RESULTS: ${results.pass} passed, ${results.fail} failed ==========\n`);
   for (const d of results.details) console.log(d);
-  console.log(`\n${results.fail > 0 ? '❌ SOME TESTS FAILED' : '✅ ALL TESTS PASSED'}`);
+  console.log(`\n${results.fail > 0 ? 'SOME TESTS FAILED' : 'ALL TESTS PASSED'}`);
+
+  // Cleanup test artifacts
+  console.log('\nCleaning up test artifacts...');
+  const apiBuyerEmail = 'api-buyer-1@estateos.test';
+  const cleanupToken = tokenCache[apiBuyerEmail];
+  if (cleanupToken) {
+    // Find and delete QA API keys via listing
+    try {
+      const keysResp = await apiCtx.request.fetch(`${API_BASE}/api/v1/api-keys`, {
+        headers: { 'x-access-token': cleanupToken },
+        timeout: 30000,
+      });
+      if (keysResp.status() === 200) {
+        const keys = await keysResp.json();
+        if (Array.isArray(keys)) {
+          for (const k of keys) {
+            if (k.name && k.name.startsWith('QA Test ')) {
+              await apiCtx.request.fetch(`${API_BASE}/api/v1/api-keys/${k.id}`, {
+                method: 'DELETE',
+                headers: { 'x-access-token': cleanupToken },
+                timeout: 30000,
+              });
+              console.log(`  Deleted QA API key: ${k.name}`);
+            }
+          }
+        }
+      }
+    } catch (e) {
+      console.log('  API key cleanup note:', e.message.substring(0, 60));
+    }
+  }
+
+  console.log('\nTo clean database artifacts: MI_DB_URI=<uri> npm run cleanup:qa');
 
   await browser.close();
 })();

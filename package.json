@@ -31,7 +31,11 @@
     "pre-commit": "node pre-commit.js",
     "releases": "node releases.js",
     "prepare": "husky install",
-    "lint": "eslint . --cache --cache-location .eslintcache"
+    "lint": "eslint . --cache --cache-location .eslintcache",
+    "check:docs-compliance": "node scripts/checkDocCompliance.js",
+    "check:forbidden": "node scripts/checkForbiddenPatterns.js",
+    "qa:permissions": "cd scripts/qa && node estateos_qa_permissions.mjs",
+    "cleanup:qa": "cd scripts/qa && node cleanup_qa_artifacts.mjs"
   },
   "devDependencies": {
     "chalk": "^5.4.1",
