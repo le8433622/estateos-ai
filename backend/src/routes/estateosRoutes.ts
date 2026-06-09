@@ -105,7 +105,6 @@ routes.route('/api/v1/pilot/metrics').get(authJwt.verifyToken, authJwt.authAdmin
 routes.route('/api/v1/estateos/health').get(estateosController.health)
 routes.route('/api/v1/estateos/readiness').get(estateosController.readiness)
 routes.route('/api/v1/estateos/env-validation').get(authJwt.verifyToken, authJwt.authAdmin, estateosController.envValidationStatus)
-routes.route('/api/v1/estateos/debug-b2').get(estateosController.debugB2Test)
 routes.route('/api/v1/estateos/seed').post(authJwt.verifyToken, authJwt.authAdmin, estateosController.triggerEstateOSSeed)
 
 export default routes
