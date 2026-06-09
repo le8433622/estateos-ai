@@ -49,6 +49,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children, refreshKey
       if (status === 200) {
         const _user = await UserService.getUser(currentUser._id)
         if (_user) {
+          localStorage.setItem('mi-be-user', JSON.stringify(_user))
           if (_user.blacklisted) {
             setUser(_user)
             setUnauthorized(true)

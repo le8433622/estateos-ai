@@ -396,6 +396,12 @@ export const createSupplyProperty = async (req: Request, res: Response) => {
     const accountProfile = await requireAccountProfile(req, ['PropertyClaimAccount', 'AgencyDeveloperAccount', 'PlatformOperatorAccount'], 'property:create_claim')
     const actor = toAuditActor(req, accountProfile)
     const body = req.body || {}
+    if (!body.title && !body.name) {
+      throw new EstateOSHttpError(400, 'title or name is required')
+    }
+    if (!body.property_type && !body.type) {
+      throw new EstateOSHttpError(400, 'property_type is required')
+    }
     const legacyType = mapPropertyType(body.property_type || body.type)
     const size = parseNumber(body.size, 0)
     const price = parseNumber(body.price?.amount ?? body.price, 0)
@@ -778,6 +784,13 @@ export const submitVerificationReport = async (req: Request, res: Response) => {
 
 export const createApiKey = async (req: Request, res: Response) => {
   try {
+    if (!req.body?.name) {
+      throw new EstateOSHttpError(400, 'name is required')
+    }
+    if (!req.body?.scopes || !Array.isArray(req.body.scopes) || req.body.scopes.length === 0) {
+      throw new EstateOSHttpError(400, 'at least one scope is required')
+    }
+
     const accountProfile = await requireAccountProfile(req, ['ApiDataBuyerAccount', 'AgencyDeveloperAccount', 'PlatformOperatorAccount'], 'api:create_key')
     const actor = toAuditActor(req, accountProfile)
     const { secret, apiKey } = await createApiKeyForAccount({
@@ -1424,6 +1437,12 @@ export const readiness = async (_req: Request, res: Response) => {
 
 export const triggerEstateOSSeed = async (req: Request, res: Response) => {
   try {
+    const existingOperator = await AccountProfile.findOne({ profile_type: 'PlatformOperatorAccount' })
+    if (existingOperator) {
+      res.status(400).json({ seeded: true, message: 'Seed already completed. Re-run not allowed.' })
+      return
+    }
+
     process.env.ES_ALLOW_DEMO_SEED = 'true'
     process.env.ES_BLOCK_PRODUCTION_SEED = 'false'
     const seedModule = await import('../setup/estateosSeed.js')

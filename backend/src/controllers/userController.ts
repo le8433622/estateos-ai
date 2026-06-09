@@ -559,6 +559,15 @@ export const signin = async (req: Request, res: Response) => {
       }
     }
 
+    const allProfiles = await AccountProfile.find({
+      user_id: user._id,
+      status: { $in: ['active', 'limited'] },
+    })
+    if (allProfiles.length > 0 && allProfiles.every(p => p.profile_type === 'AiAgentAccount')) {
+      res.sendStatus(204)
+      return
+    }
+
     const passwordMatch = await bcrypt.compare(password, user.password)
 
     if (passwordMatch) {
