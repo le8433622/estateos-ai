@@ -277,6 +277,18 @@ export const getCurrentUser = (): movininTypes.User | null => {
   return user
 }
 
+export const getPermissions = (): string[] => {
+  const user = getCurrentUser()
+  if (user) {
+    return (user as unknown as Record<string, unknown>).permissions as string[] || []
+  }
+  return []
+}
+
+export const hasPermission = (permission: string): boolean => {
+  return getPermissions().includes(permission)
+}
+
 /**
  * Get a User by ID.
  *

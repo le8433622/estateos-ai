@@ -68,6 +68,7 @@ const Header = ({
   const [sideAnchorEl, setSideAnchorEl] = useState<HTMLElement | null>(null)
   const [isSignedIn, setIsSignedIn] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
+  const [permissions, setPermissions] = useState<string[]>([])
 
   const isMenuOpen = Boolean(anchorEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
@@ -192,8 +193,10 @@ const Header = ({
   useEffect(() => {
     if (user) {
       setIsSignedIn(true)
+      setPermissions(UserService.getPermissions())
     } else {
       setIsSignedIn(false)
+      setPermissions([])
     }
     setIsLoaded(true)
   }, [user])
@@ -291,78 +294,94 @@ const Header = ({
                   <ListItemIcon><DashboardIcon /></ListItemIcon>
                   <ListItemText primary={strings.DASHBOARD} />
                 </ListItem>
-                <ListItem
-                  onClick={() => {
-                    navigate('/estateos')
-                    handleSideMenuClose()
-                  }}
-                >
-                  <ListItemIcon><EstateOSIcon /></ListItemIcon>
-                  <ListItemText primary="EstateOS" />
-                </ListItem>
-                <ListItem
-                  onClick={() => {
-                    navigate('/estateos/billing')
-                    handleSideMenuClose()
-                  }}
-                >
-                  <ListItemIcon><BillingIcon /></ListItemIcon>
-                  <ListItemText primary="Billing" />
-                </ListItem>
-                <ListItem
-                  onClick={() => {
-                    navigate('/estateos/property-review')
-                    handleSideMenuClose()
-                  }}
-                >
-                  <ListItemIcon><ReviewIcon /></ListItemIcon>
-                  <ListItemText primary="Property Review" />
-                </ListItem>
-                <ListItem
-                  onClick={() => {
-                    navigate('/estateos/data-quality')
-                    handleSideMenuClose()
-                  }}
-                >
-                  <ListItemIcon><QualityIcon /></ListItemIcon>
-                  <ListItemText primary="Data Quality" />
-                </ListItem>
-                <ListItem
-                  onClick={() => {
-                    navigate('/estateos/distribution')
-                    handleSideMenuClose()
-                  }}
-                >
-                  <ListItemIcon><DistributionIcon /></ListItemIcon>
-                  <ListItemText primary="Distribution" />
-                </ListItem>
-                <ListItem
-                  onClick={() => {
-                    navigate('/estateos/partners')
-                    handleSideMenuClose()
-                  }}
-                >
-                  <ListItemIcon><PartnersIcon /></ListItemIcon>
-                  <ListItemText primary="Partners" />
-                </ListItem>
-                <ListItem
-                  onClick={() => {
-                    navigate('/estateos/pilot')
-                    handleSideMenuClose()
-                  }}
-                >
-                  <ListItemIcon><PilotIcon /></ListItemIcon>
-                  <ListItemText primary="Pilot" />
-                </ListItem>
-                <ListItem
-                  onClick={() => {
-                    navigate('/estateos/launch')
-                    handleSideMenuClose()
-                  }}
-                >
-                  <ListItemIcon><LaunchIcon /></ListItemIcon>
-                  <ListItemText primary="Launch" />
-                </ListItem>
+                {permissions.includes('admin:moderate') && (
+                  <ListItem
+                    onClick={() => {
+                      navigate('/estateos')
+                      handleSideMenuClose()
+                    }}
+                  >
+                    <ListItemIcon><EstateOSIcon /></ListItemIcon>
+                    <ListItemText primary="EstateOS" />
+                  </ListItem>
+                )}
+                {permissions.includes('admin:moderate') && (
+                  <ListItem
+                    onClick={() => {
+                      navigate('/estateos/billing')
+                      handleSideMenuClose()
+                    }}
+                  >
+                    <ListItemIcon><BillingIcon /></ListItemIcon>
+                    <ListItemText primary="Billing" />
+                  </ListItem>
+                )}
+                {permissions.includes('admin:moderate') && (
+                  <ListItem
+                    onClick={() => {
+                      navigate('/estateos/property-review')
+                      handleSideMenuClose()
+                    }}
+                  >
+                    <ListItemIcon><ReviewIcon /></ListItemIcon>
+                    <ListItemText primary="Property Review" />
+                  </ListItem>
+                )}
+                {permissions.includes('admin:moderate') && (
+                  <ListItem
+                    onClick={() => {
+                      navigate('/estateos/data-quality')
+                      handleSideMenuClose()
+                    }}
+                  >
+                    <ListItemIcon><QualityIcon /></ListItemIcon>
+                    <ListItemText primary="Data Quality" />
+                  </ListItem>
+                )}
+                {permissions.includes('admin:moderate') && (
+                  <ListItem
+                    onClick={() => {
+                      navigate('/estateos/distribution')
+                      handleSideMenuClose()
+                    }}
+                  >
+                    <ListItemIcon><DistributionIcon /></ListItemIcon>
+                    <ListItemText primary="Distribution" />
+                  </ListItem>
+                )}
+                {permissions.includes('admin:moderate') && (
+                  <ListItem
+                    onClick={() => {
+                      navigate('/estateos/partners')
+                      handleSideMenuClose()
+                    }}
+                  >
+                    <ListItemIcon><PartnersIcon /></ListItemIcon>
+                    <ListItemText primary="Partners" />
+                  </ListItem>
+                )}
+                {permissions.includes('admin:moderate') && (
+                  <ListItem
+                    onClick={() => {
+                      navigate('/estateos/pilot')
+                      handleSideMenuClose()
+                    }}
+                  >
+                    <ListItemIcon><PilotIcon /></ListItemIcon>
+                    <ListItemText primary="Pilot" />
+                  </ListItem>
+                )}
+                {permissions.includes('admin:moderate') && (
+                  <ListItem
+                    onClick={() => {
+                      navigate('/estateos/launch')
+                      handleSideMenuClose()
+                    }}
+                  >
+                    <ListItemIcon><LaunchIcon /></ListItemIcon>
+                    <ListItemText primary="Launch" />
+                  </ListItem>
+                )}
                 <ListItem
                   onClick={() => {
                     navigate('about/')

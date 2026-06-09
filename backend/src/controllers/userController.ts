@@ -20,6 +20,7 @@ import * as mailHelper from '../utils/mailHelper'
 import NotificationCounter from '../models/NotificationCounter'
 import Notification from '../models/Notification'
 import Property from '../models/Property'
+import AccountProfile from '../models/AccountProfile'
 import * as logger from '../utils/logger'
 
 /**
@@ -541,10 +542,21 @@ export const signin = async (req: Request, res: Response) => {
       || !user
       || !user.password
       || ![movininTypes.AppType.Frontend, movininTypes.AppType.Admin].includes(type)
-      || (type === movininTypes.AppType.Admin && user.type !== movininTypes.UserType.Admin)
     ) {
       res.sendStatus(204)
       return
+    }
+
+    if (type === movininTypes.AppType.Admin) {
+      const adminProfile = await AccountProfile.findOne({
+        user_id: user._id,
+        status: { $in: ['active', 'limited'] },
+        allowed_actions: 'admin:moderate',
+      })
+      if (!adminProfile) {
+        res.sendStatus(204)
+        return
+      }
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password)
@@ -584,7 +596,13 @@ export const signin = async (req: Request, res: Response) => {
       const payload: authHelper.SessionData = { id: user._id.toString() }
       const token = await authHelper.encryptJWT(payload, stayConnected)
 
-      const loggedUser: movininTypes.User = {
+      const accountProfiles = await AccountProfile.find({
+        user_id: user._id,
+        status: { $in: ['active', 'limited'] },
+      })
+      const permissions = [...new Set(accountProfiles.flatMap(p => p.allowed_actions || []))]
+
+      const loggedUser: Record<string, unknown> = {
         _id: user._id.toString(),
         email: user.email,
         fullName: user.fullName,
@@ -593,6 +611,8 @@ export const signin = async (req: Request, res: Response) => {
         enableEmailNotifications: user.enableEmailNotifications,
         blacklisted: user.blacklisted,
         avatar: user.avatar,
+        account_profiles: accountProfiles.map(p => p.profile_type),
+        permissions,
       }
 
       //

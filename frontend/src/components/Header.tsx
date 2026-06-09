@@ -81,6 +81,7 @@ const Header = ({
   const [sideAnchorEl, setSideAnchorEl] = useState<HTMLElement | null>(null)
   const [isSignedIn, setIsSignedIn] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
+  const [permissions, setPermissions] = useState<string[]>([])
 
   const isMenuOpen = Boolean(anchorEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
@@ -118,9 +119,11 @@ const Header = ({
     if (user) {
       setCurrentUser(user)
       setIsSignedIn(true)
+      setPermissions(UserService.getPermissions())
     } else {
       setCurrentUser(undefined)
       setIsSignedIn(false)
+      setPermissions([])
     }
     setIsLoaded(true)
   }, [user])
@@ -415,7 +418,7 @@ const Header = ({
                     <ListItemIcon><DataProductsIcon /></ListItemIcon>
                     <ListItemText primary="Data Products" />
                   </ListItem>
-                  {isSignedIn && (
+                  {isSignedIn && (permissions.includes('property:read_partner') || permissions.includes('api:read_usage')) && (
                     <ListItem
                       onClick={() => {
                         navigate('/partners')
@@ -426,7 +429,7 @@ const Header = ({
                       <ListItemText primary="Partners" />
                     </ListItem>
                   )}
-                  {isSignedIn && (
+                  {isSignedIn && permissions.includes('property:create_claim') && (
                     <ListItem
                       onClick={() => {
                         navigate('/supply')
@@ -437,7 +440,7 @@ const Header = ({
                       <ListItemText primary="Supply" />
                     </ListItem>
                   )}
-                  {isSignedIn && (
+                  {isSignedIn && permissions.includes('api:create_key') && (
                     <ListItem
                       onClick={() => {
                         navigate('/api')
@@ -448,7 +451,7 @@ const Header = ({
                       <ListItemText primary="API Buyer" />
                     </ListItem>
                   )}
-                  {isSignedIn && (
+                  {isSignedIn && permissions.includes('verification:accept_job') && (
                     <ListItem
                       onClick={() => {
                         navigate('/verifier')
@@ -459,7 +462,7 @@ const Header = ({
                       <ListItemText primary="Verifier" />
                     </ListItem>
                   )}
-                  {isSignedIn && (
+                  {isSignedIn && permissions.includes('deal_room:join') && (
                     <ListItem
                       onClick={() => {
                         navigate('/demand')
