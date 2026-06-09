@@ -73,6 +73,8 @@ const SignIn = () => {
             navigate(`/property${window.location.search}`)
           } else if (params.has('b')) {
             navigate(`/update-booking${window.location.search}`)
+          } else if (user && user.account_profiles?.includes('PlatformOperatorAccount')) {
+            navigate('/estateos')
           } else {
             navigate('/')
           }
@@ -107,7 +109,14 @@ const SignIn = () => {
             const user = await UserService.getUser(currentUser._id)
 
             if (user) {
-              navigate(`/${window.location.search}`)
+              const params = new URLSearchParams(window.location.search)
+              if (params.has('u') || params.has('c') || params.has('cr') || params.has('b')) {
+                navigate(`/${window.location.search}`)
+              } else if (user.account_profiles?.includes('PlatformOperatorAccount')) {
+                navigate('/estateos')
+              } else {
+                navigate(`/${window.location.search}`)
+              }
             } else {
               await UserService.signout()
             }

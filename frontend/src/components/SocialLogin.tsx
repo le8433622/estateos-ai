@@ -46,6 +46,25 @@ const SocialLogin = ({
 
   const { setUser, setUserLoaded } = useUserContext() as UserContextType
 
+  const getProfileRedirect = (profiles?: string[]): string => {
+    if (!profiles || profiles.length === 0) {
+      return '/'
+    }
+    if (profiles.includes('PropertyClaimAccount')) {
+      return '/supply'
+    }
+    if (profiles.includes('VerificationOperatorAccount')) {
+      return '/verifier'
+    }
+    if (profiles.includes('ApiDataBuyerAccount')) {
+      return '/api'
+    }
+    if (profiles.includes('AgencyDeveloperAccount')) {
+      return '/partners'
+    }
+    return '/'
+  }
+
   const loginSuccess = async (socialSignInType: movininTypes.SocialSignInType, accessToken: string, email: string, fullName: string, avatar?: string) => {
     const data: movininTypes.SignInPayload = {
       socialSignInType,
@@ -65,15 +84,17 @@ const SocialLogin = ({
         }
       } else {
         const user = await UserService.getUser(res.data._id)
-        setUser(user)
-        setUserLoaded(true)
+        if (user) {
+          setUser(user)
+          setUserLoaded(true)
 
-        if (redirectToHomepage) {
-          navigate('/')
-        }
+          if (redirectToHomepage) {
+            navigate(getProfileRedirect(user.account_profiles))
+          }
 
-        if (reloadPage) {
-          navigate(0)
+          if (reloadPage) {
+            navigate(0)
+          }
         }
       }
     } else if (onSignInError) {

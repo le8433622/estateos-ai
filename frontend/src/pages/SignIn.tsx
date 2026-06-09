@@ -79,6 +79,28 @@ const SignIn = () => {
     }
   }
 
+  const getProfileRedirect = (profiles?: string[]): string | null => {
+    if (!profiles || profiles.length === 0) {
+      return null
+    }
+    if (profiles.includes('PropertyClaimAccount')) {
+      return '/supply'
+    }
+    if (profiles.includes('VerificationOperatorAccount')) {
+      return '/verifier'
+    }
+    if (profiles.includes('ApiDataBuyerAccount')) {
+      return '/api'
+    }
+    if (profiles.includes('AgencyDeveloperAccount')) {
+      return '/partners'
+    }
+    if (profiles.includes('PropertyDemandAccount')) {
+      return '/'
+    }
+    return null
+  }
+
   const onLoad = async (user?: movininTypes.User) => {
     UserService.setStayConnected(false)
 
@@ -97,10 +119,10 @@ const SignIn = () => {
             }
           })
         } else {
-          navigate('/')
+          navigate(getProfileRedirect(user.account_profiles) || '/')
         }
       } else {
-        navigate('/')
+        navigate(getProfileRedirect(user.account_profiles) || '/')
       }
     } else {
       setVisible(true)

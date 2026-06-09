@@ -267,6 +267,8 @@ export interface User {
   accessToken?: string
   checked?: boolean
   customerId?: string
+  account_profiles?: string[]
+  permissions?: string[]
 }
 
 export interface Option {
